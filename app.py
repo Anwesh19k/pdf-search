@@ -14,8 +14,8 @@ app.secret_key = 'supersecretkey'
 
 HTML = '''
 <!doctype html>
-<title>Q&A TXT Search App</title>
-<h2>Upload TXT files (with Q&A) and Search Their Content</h2>
+<title>TXT Interview Q&A Search</title>
+<h2>Upload TXT files (numbered Q&A) and Search</h2>
 <form method=post enctype=multipart/form-data action="/upload">
   <input type=file name=file multiple required>
   <input type=submit value=Upload>
@@ -46,12 +46,11 @@ HTML = '''
 {% if results is not none %}
   <h3>Results for: "{{ request.args.get('query', '') }}"</h3>
   <ul>
-  {% for filename, q, a in results %}
+  {% for filename, question, answer in results %}
     <li>
       <b>{{ filename }}</b>:<br>
-      <b>Q:</b> {{ q|safe }}<br>
-      <b>A:</b> {{ a|safe }}
-      <br>
+      <b>Q:</b> {{ question|safe }}<br>
+      <b>A:</b> {{ answer|safe }}<br>
     </li>
   {% endfor %}
   </ul>
@@ -64,16 +63,25 @@ HTML = '''
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def extract_qa_pairs(txt_paths):
+def extract_numbered_qa(txt_paths):
     qa_data = []
     for txt_path in txt_paths:
         try:
             with open(os.path.join(UPLOAD_FOLDER, txt_path), encoding="utf-8") as f:
                 content = f.read()
-            # Find all Q&A pairs (assuming blank lines or consistent structure)
-            pairs = re.findall(r"Q:(.*?)[\r\n]+A:(.*?)(?:[\r\n]+|$)", content, re.DOTALL | re.IGNORECASE)
-            for q, a in pairs:
-                qa_data.append({"filename": txt_path, "q": q.strip(), "a": a.strip()})
+
+            # Split into sections at lines like: "1. question", "2. next question", etc.
+            pattern = r'(?m)^\d+\.\s+(.*)'
+            q_lines = list(re.finditer(pattern, content))
+            for idx, q_match in enumerate(q_lines):
+                q_start = q_match.end()
+                q_text = q_match.group(1).strip()
+                # Answer starts at the end of the question line, ends at the start of next question or EOF
+                if idx + 1 < len(q_lines):
+                    a_text = content[q_start:q_lines[idx+1].start()].strip().replace('\n', ' ')
+                else:
+                    a_text = content[q_start:].strip().replace('\n', ' ')
+                qa_data.append({"filename": txt_path, "q": q_text, "a": a_text})
         except Exception as e:
             print(f"Failed to extract from {txt_path}: {e}")
     return qa_data
@@ -94,7 +102,7 @@ def index():
     results = None
     query = request.args.get('query', '').strip()
     if query and files:
-        qa_data = extract_qa_pairs(files)
+        qa_data = extract_numbered_qa(files)
         results = search_qa(qa_data, query)
     return render_template_string(HTML, files=files, results=results)
 
