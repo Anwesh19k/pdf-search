@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 from PyPDF2 import PdfReader
 
 UPLOAD_FOLDER = 'uploads'
-ALLOWED_EXTENSIONS = {'pdf'}
+ALLOWED_EXTENSIONS = {'pdf', 'txt'}
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -15,8 +15,8 @@ app.secret_key = 'supersecretkey'  # Needed for flash messages
 
 HTML = '''
 <!doctype html>
-<title>PDF Search App</title>
-<h2>Upload PDFs and Search Their Content</h2>
+<title>PDF/TXT Search App</title>
+<h2>Upload PDFs or TXT files and Search Their Content</h2>
 <form method=post enctype=multipart/form-data action="/upload">
   <input type=file name=file multiple required>
   <input type=submit value=Upload>
@@ -31,11 +31,11 @@ HTML = '''
   {% endif %}
 {% endwith %}
 
-{% if pdfs %}
-  <h4>Uploaded PDFs:</h4>
+{% if files %}
+  <h4>Uploaded Files:</h4>
   <ul>
-    {% for pdf in pdfs %}
-      <li><a href="{{ url_for('download_file', filename=pdf) }}">{{ pdf }}</a></li>
+    {% for f in files %}
+      <li><a href="{{ url_for('download_file', filename=f) }}">{{ f }}</a></li>
     {% endfor %}
   </ul>
   <form method=get action="/">
@@ -62,22 +62,29 @@ HTML = '''
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def extract_text_from_pdfs(pdf_paths):
+def extract_text_from_files(file_list):
     text_data = []
-    for pdf_path in pdf_paths:
+    for fname in file_list:
+        ext = fname.rsplit('.', 1)[1].lower()
+        file_path = os.path.join(UPLOAD_FOLDER, fname)
         try:
-            reader = PdfReader(os.path.join(UPLOAD_FOLDER, pdf_path))
-            full_text = ""
-            for page in reader.pages:
-                t = page.extract_text()
-                if t:
-                    full_text += t + "\n"
-            text_data.append({"filename": pdf_path, "content": full_text})
+            if ext == "pdf":
+                reader = PdfReader(file_path)
+                full_text = ""
+                for page in reader.pages:
+                    t = page.extract_text()
+                    if t:
+                        full_text += t + "\n"
+                text_data.append({"filename": fname, "content": full_text})
+            elif ext == "txt":
+                with open(file_path, "r", encoding="utf-8") as f:
+                    full_text = f.read()
+                text_data.append({"filename": fname, "content": full_text})
         except Exception as e:
-            print(f"Failed to extract from {pdf_path}: {e}")
+            print(f"Failed to extract from {fname}: {e}")
     return text_data
 
-def search_pdfs(text_data, query):
+def search_files(text_data, query):
     results = []
     pattern = re.compile(re.escape(query), re.IGNORECASE)
     for doc in text_data:
@@ -91,13 +98,13 @@ def search_pdfs(text_data, query):
 
 @app.route("/", methods=["GET"])
 def index():
-    pdfs = os.listdir(UPLOAD_FOLDER)
+    files = os.listdir(UPLOAD_FOLDER)
     results = None
     query = request.args.get('query', '').strip()
-    if query and pdfs:
-        text_data = extract_text_from_pdfs(pdfs)
-        results = search_pdfs(text_data, query)
-    return render_template_string(HTML, pdfs=pdfs, results=results)
+    if query and files:
+        text_data = extract_text_from_files(files)
+        results = search_files(text_data, query)
+    return render_template_string(HTML, files=files, results=results)
 
 @app.route("/upload", methods=["POST"])
 def upload_file():
