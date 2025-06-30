@@ -1,0 +1,888 @@
+A. SQL Basics & Data Types (First 50+)
+1. What is SQL and why is it important?
+“SQL is the standard language for managing and querying relational databases. It lets me
+store, retrieve, and manipulate structured data efficiently, which is fundamental in any datadriven business.”
+2. What is the difference between SQL and a database?
+“SQL is a language used to communicate with databases. The database itself is the system
+that stores the data; SQL just tells it what to do.”
+3. What are the major types of SQL statements?
+“We have DDL for defining structure (like CREATE or ALTER), DML for manipulating data (like
+INSERT, UPDATE, DELETE), DCL for control (GRANT, REVOKE), and TCL for transactions
+(COMMIT, ROLLBACK).”
+4. Explain the difference between DDL and DML.
+“DDL changes the schema or structure—like creating or altering tables—while DML changes
+the actual data inside the tables.”
+5. What are common SQL data types?
+“Typical data types are INT, VARCHAR, CHAR, DATE, FLOAT, DECIMAL, and BOOLEAN. Each is
+suited for specific kinds of data.”
+6. How do NULL values behave in SQL?
+“NULL means unknown or missing. Any operation involving NULL usually returns NULL, and
+you need IS NULL to test for it, not ‘=’.”
+7. What’s the difference between CHAR and VARCHAR?
+“CHAR is fixed-length, so it always reserves the same space. VARCHAR is variable-length and
+only uses as much space as needed, which is more efficient for strings of unpredictable
+length.”
+8. What are constraints? Name a few common ones.
+“Constraints enforce rules in the database—like PRIMARY KEY, FOREIGN KEY, UNIQUE, NOT
+NULL, and CHECK. They help maintain data integrity.”
+9. What is a primary key?
+“A primary key uniquely identifies each row in a table. It can’t be NULL and must be unique
+for every record.”
+10. What is a unique key?
+“It ensures that values in a column or group of columns are unique across all rows, but unlike
+primary key, it can allow one NULL.”
+11. What is a foreign key? How does it enforce integrity?
+“A foreign key links to a primary key in another table, enforcing referential integrity by
+ensuring relationships between tables remain valid.”
+12. What is normalization and why is it used?
+“Normalization is the process of organizing data to reduce redundancy and improve integrity,
+usually by splitting data into related tables.”
+13. What is denormalization? When is it used?
+“Denormalization intentionally introduces redundancy for performance reasons—mainly for
+faster reads in reporting or data warehousing.”
+14. Explain the first normal form (1NF).
+“A table is in 1NF if all its columns have atomic (indivisible) values and there are no repeating
+groups.”
+15. Explain the second normal form (2NF).
+“A table is in 2NF if it’s in 1NF and every non-key attribute is fully dependent on the whole
+primary key—not just part of it.”
+16. Explain the third normal form (3NF).
+“A table is in 3NF if it’s in 2NF and all its columns are only dependent on the primary key—no
+transitive dependencies.”
+17. What is an index? Why is it useful?
+“An index is like a data structure that speeds up lookups on large tables, similar to an index in
+a book.”
+18. What are views? Why would you use a view?
+“A view is a virtual table based on a query. I use it for abstraction, security, and simplifying
+complex queries.”
+19. What is a schema?
+“A schema is a logical container for database objects like tables, views, and procedures—it
+helps organize and manage access.”
+20. What is a sequence?
+“A sequence automatically generates numeric values, usually for unique keys, often used to
+auto-increment IDs.”
+21. What is an identity column?
+“It’s a column that auto-increments its value each time a new row is inserted, often used for
+surrogate keys.”
+22. How do default values work in SQL tables?
+“I can assign a default value so if a row is inserted without a value for that column, the
+default is used.”
+23. What is a check constraint?
+“It restricts the values allowed in a column, enforcing business rules—like age >= 18.”
+24. What is a composite key?
+“It’s a primary key made of more than one column, used when a single column isn’t unique.”
+25. How is a table different from a view?
+“A table physically stores data; a view is just a saved query and shows data dynamically.”
+26. How do you define a column as NOT NULL?
+“I specify NOT NULL in the column definition to ensure every row must have a value for that
+column.”
+27. What is auto-increment?
+“It’s an attribute that automatically increases a numeric value when a new record is
+inserted.”
+28. What is a surrogate key?
+“It’s an artificial key, usually numeric, added for uniquely identifying rows, rather than using
+business data.”
+29. What is a candidate key?
+“Any column or combination of columns that can uniquely identify rows—primary key is
+chosen from candidate keys.”
+30. How are comments added in SQL scripts?
+“I use -- for single-line comments and /* ... */ for multi-line comments.”
+31. What is a transaction? Why is it important?
+“A transaction is a sequence of operations executed as a single unit. It ensures data integrity
+through atomicity—all or nothing.”
+32. What is ACID in database systems?
+“ACID stands for Atomicity, Consistency, Isolation, and Durability—core properties that
+guarantee reliable transaction processing.”
+33. What does COMMIT do?
+“It permanently saves changes made during a transaction to the database.”
+34. What does ROLLBACK do?
+“It undoes changes made in the current transaction, restoring the database to its previous
+state.”
+35. What is the purpose of SAVEPOINT?
+“It lets me set a point within a transaction to which I can roll back, without rolling back the
+whole transaction.”
+36. What is a stored procedure?
+“It’s a precompiled set of SQL statements that I can execute as a program—great for
+automating routines.”
+37. What is a function in SQL (as opposed to a procedure)?
+“A function returns a value and can be used in SELECTs; procedures don’t return a value
+directly and are often used for batch logic.”
+38. What is a trigger and how is it used?
+“A trigger is code that runs automatically in response to certain events (like INSERT, UPDATE,
+DELETE) on a table.”
+39. What is a synonym in SQL?
+“It’s an alias for another object, useful for abstraction or simplifying object names.”
+40. What is a materialized view?
+“It’s a view that stores its result physically, so queries run faster. It can be refreshed
+periodically.”
+41. How do you handle duplicate rows?
+“I can use DISTINCT, or remove duplicates with proper constraints or cleansing queries.”
+42. What’s the difference between TRUNCATE and DELETE?
+“TRUNCATE quickly removes all rows and resets the identity but can’t be rolled back in some
+databases; DELETE removes rows one by one and can be rolled back.”
+43. What happens if you omit a WHERE clause in UPDATE/DELETE?
+“All rows are updated or deleted—so I always double-check for WHERE before running such
+queries!”
+44. What is referential integrity?
+“It ensures relationships between tables are valid—for example, every foreign key value must
+exist in the parent table.”
+45. What is the default sort order in SQL?
+“SQL returns data in an unspecified order unless I use ORDER BY—so I always specify ORDER
+BY for consistent results.”
+46. How can you ensure data consistency?
+“Through constraints, proper transaction control, and validation logic.”
+47. What are the limitations of SQL?
+“It’s great for structured data, but not ideal for unstructured data or highly complex
+analytics; performance can suffer on huge data if not optimized.”
+48. What is the use of system tables/information_schema?
+“They store metadata about tables, columns, and database structure—handy for
+documentation and automation.”
+49. What is the difference between static and dynamic SQL?
+“Static SQL is pre-written and doesn’t change; dynamic SQL is constructed at runtime,
+allowing flexible queries but can risk SQL injection.”
+50. How can you comment out code in SQL?
+“I use -- for single lines or /* ... */ for multi-line comments.”
+B. Joins & Relationships (First 50+)
+1. What is a JOIN?
+“A JOIN combines rows from two or more tables based on related columns, letting me work
+with data from multiple sources together.”
+2. Name all types of JOINs and their uses.
+“INNER JOIN returns only matching rows. LEFT JOIN returns all rows from the left, even if
+there’s no match. RIGHT JOIN is the reverse. FULL OUTER JOIN returns all rows from both
+tables. CROSS JOIN creates a Cartesian product, and SELF JOIN joins a table to itself.”
+3. What is the difference between INNER JOIN and LEFT JOIN?
+“INNER JOIN only gives rows with matches in both tables. LEFT JOIN gives all rows from the
+left table, plus matched data from the right—if no match, the right-side columns are NULL.”
+4. When would you use a RIGHT JOIN?
+“When I want all rows from the right table, regardless of matches in the left. It’s less
+common, but handy if the right table is primary for your query.”
+5. What does a FULL OUTER JOIN return?
+“It returns all rows from both tables; if there’s no match, the missing side is filled with
+NULLs.”
+6. How does a CROSS JOIN work?
+“It returns the Cartesian product—every row of the first table combined with every row of
+the second.”
+7. What is a SELF JOIN?
+“It joins a table to itself, useful for comparing rows within the same table, like hierarchical
+data (manager–employee).”
+8. What’s the difference between JOIN and UNION?
+“A JOIN combines columns from multiple tables horizontally. UNION stacks the results of two
+queries vertically—adding rows, not columns.”
+9. What is a NATURAL JOIN?
+“It automatically joins tables on all columns with the same name. I rarely use it, because
+explicit joins are safer.”
+10. What’s the difference between explicit and implicit JOIN syntax?
+“Explicit JOIN uses the JOIN keyword and ON clause; implicit uses commas and a WHERE
+clause. Explicit is preferred for clarity.”
+11. What is a many-to-many relationship?
+“It’s when rows in one table can relate to many rows in another, and vice versa. I model it
+with a junction or bridge table.”
+12. How do you model one-to-many and many-to-many relationships in SQL?
+“One-to-many uses a foreign key. Many-to-many uses an intermediate table with foreign
+keys to both parent tables.”
+13. How can you join more than two tables?
+“I just keep adding JOIN clauses—SQL lets me join as many tables as I need, as long as the
+relationships exist.”
+14. What happens if there are duplicate column names in a JOIN?
+“I use table aliases or fully qualify the column names (table.col) to avoid ambiguity.”
+15. What is a Cartesian product? When can it happen unintentionally?
+“A Cartesian product returns all combinations of two tables’ rows, usually if I forget the JOIN
+condition.”
+16. What is referential integrity and how do JOINs relate to it?
+“JOINs often rely on foreign keys; referential integrity ensures JOINs find valid matches and
+data remains consistent.”
+17. What is the purpose of ON vs USING in JOINs?
+“ON lets me specify any join condition. USING is shorthand if columns have the same name
+in both tables.”
+18. What is an equi-join?
+“It’s a join using the equality operator (=) in the condition—almost all standard joins are
+equi-joins.”
+19. What is a non-equi join?
+“It’s a join where the relationship uses operators other than =, such as >, <, or BETWEEN.”
+20. Can you JOIN on multiple columns?
+“Yes, I can specify multiple columns in the ON condition, ensuring composite matches.”
+21. What is a semi-join?
+“It returns rows from the left table that have at least one match in the right, but doesn’t
+bring columns from the right.”
+22. What is an anti-join?
+“It returns rows from the left table that have no match in the right—often done with NOT
+EXISTS or LEFT JOIN WHERE right.col IS NULL.”
+23. What happens if you JOIN tables without a relationship?
+“I get a Cartesian product—usually a huge, meaningless result set!”
+24. How does NULL affect JOINs?
+“If the join key is NULL, the row won’t match in INNER or OUTER joins—so missing values can
+cause issues.”
+25. How do indexes impact join performance?
+“Indexes on join keys can speed up joins dramatically by reducing the number of rows
+scanned.”
+26. What is the difference between INNER JOIN and WHERE clause filtering?
+“INNER JOIN brings matching rows; WHERE filters them. Sometimes, moving conditions can
+change the results, especially with OUTER JOINs.”
+27. Can you join a table with itself? Why?
+“Yes, for hierarchies or comparing rows, like employees and their managers.”
+28. What is a surrogate key and how does it help joins?
+“A surrogate key is a numeric ID, making joins simpler and faster, especially compared to
+multi-column or text keys.”
+29. How can you simulate a FULL OUTER JOIN if the database does not support it?
+“By using LEFT JOIN and RIGHT JOIN together with UNION, then removing duplicates.”
+30. How do you handle missing values when joining tables?
+“I check for NULLs and handle them with COALESCE or default values in SELECT.”
+31. What’s the difference between inner, left, right, and full join in terms of returned records?
+“Inner: only matches; Left: all left, matches or NULL; Right: all right, matches or NULL; Full: all
+rows from both.”
+32. What’s a hash join? When is it used?
+“It uses hashing for matching join keys, often fastest for large, unsorted tables.”
+33. What is a merge join? When is it optimal?
+“It’s a join based on sorted input; works well if both tables are pre-sorted or indexed.”
+34. What are composite keys and how do they affect joins?
+“Composite keys combine multiple columns; joins must match all key columns, which can be
+slower.”
+35. How do you detect and fix join errors or row duplication?
+“I check for unexpected row counts or duplicates, and fix by reviewing join conditions and
+data quality.”
+36. What is a circular join? Is it possible or recommended?
+“It’s when tables join in a loop; it’s rare and usually a design flaw—should be avoided.”
+37. How do join conditions affect query performance?
+“Efficient join conditions, like indexed keys, speed up queries; joining on non-indexed or
+calculated fields slows them down.”
+38. When would you use a CROSS APPLY or OUTER APPLY?
+“When I need to join each row to the result of a table-valued function or a correlated
+subquery.”
+39. What’s the importance of join order in large queries?
+“It can affect performance, especially if there’s a huge table—put smaller, filtered tables first
+to help the optimizer.”
+40. How can you perform a join with more than one matching row in the right table?
+“I get a one-to-many result—each left row duplicates for every matching right row.”
+41. What’s a star schema and how do joins work in it?
+“In star schema, fact tables join to dimension tables via foreign keys—joins are simple and
+fast.”
+42. How can you troubleshoot slow join queries?
+“I analyze the query plan, check indexes, and look for data skew or missing join conditions.”
+43. What is denormalized join?
+“A join on denormalized data—where tables already contain repeated information for faster
+queries.”
+44. How do joins affect aggregate results?
+“Joins can multiply rows, so aggregates may double-count if not handled carefully.”
+45. What is a lookup table and how is it used with joins?
+“It provides reference data (like codes and names) and is joined to translate or categorize
+main table values.”
+46. What are orphan records and how do you detect them?
+“Rows with foreign keys that don’t match the parent table; I find them with LEFT JOIN and
+filter for NULLs on the right side.”
+47. How can you prevent data duplication in joins?
+“By using DISTINCT or fixing data quality; also, joining only on unique keys.”
+48. How do you perform self-referential joins for hierarchies?
+“I join a table to itself, matching a parent/child key relationship—common in org charts.”
+49. What’s a recursive join?
+“A join that keeps relating a table to itself, often used for traversing hierarchies with CTEs.”
+50. What’s the use of CTE (Common Table Expressions) with joins?
+“CTEs let me break complex joins into steps, improving readability and enabling recursion for
+hierarchies.”
+C. Aggregation, Grouping & Filtering (First 50+)
+1. What is GROUP BY and why is it important?
+“GROUP BY lets me summarize data by one or more columns, making it easy to get totals,
+averages, or counts per category—like sales per region.”
+2. What does HAVING do that WHERE doesn’t?
+“HAVING filters after aggregation; WHERE filters before aggregation. HAVING is for conditions
+on grouped results, like COUNT > 10.”
+3. What are aggregate functions? Name some.
+“Aggregate functions combine multiple rows: SUM, COUNT, AVG, MIN, and MAX are the most
+common.”
+4. How do NULL values affect aggregation?
+“Most aggregates ignore NULLs—like COUNT(column) only counts non-NULL, while
+COUNT(*) counts all rows. SUM, AVG skip NULLs too.”
+5. What’s the difference between COUNT(*) and COUNT(column)?
+“COUNT(*) counts all rows. COUNT(column) counts only non-NULL values in that column.”
+6. Can you use GROUP BY without an aggregate?
+“Yes, but it usually just collapses duplicates—it’s mostly useful with aggregates.”
+7. What happens if you SELECT a column not in GROUP BY or aggregate?
+“You’ll get an error, since SQL needs to know how to reduce multiple values to one per
+group.”
+8. How do you filter before and after aggregation?
+“I use WHERE to filter raw rows, HAVING to filter groups after aggregation.”
+9. What is the order of execution for SELECT statements?
+“FROM > WHERE > GROUP BY > HAVING > SELECT > ORDER BY > LIMIT.”
+10. What’s the difference between WHERE and HAVING?
+“WHERE is for raw data; HAVING is for aggregated data.”
+11. What are window functions? How are they different from aggregates?
+“Window functions like ROW_NUMBER() or SUM() OVER() calculate across rows without
+collapsing them—so I can see both details and totals in the same row.”
+12. What does OVER(PARTITION BY ...) do?
+“It groups rows for a window function, like resetting a running total for each customer.”
+13. What is a moving average and how is it calculated in SQL?
+“It’s an average over a sliding window of rows—calculated using window functions with
+ROWS BETWEEN.”
+14. What’s the difference between RANK, DENSE_RANK, and ROW_NUMBER?
+“ROW_NUMBER gives unique numbers, RANK skips numbers for ties, DENSE_RANK doesn’t
+skip for ties.”
+15. Can you use aggregate functions in a WHERE clause?
+“No, because WHERE filters before aggregation. I use HAVING instead.”
+16. What is a CUBE or ROLLUP in SQL?
+“CUBE and ROLLUP are extensions to GROUP BY for multi-level summaries—like subtotals
+and grand totals.”
+17. How do you calculate running totals?
+“Using SUM() OVER(ORDER BY ...) as a window function, or by joining to a cumulative
+subquery.”
+18. What’s the purpose of DISTINCT in aggregates?
+“It makes functions like COUNT or SUM only use unique values.”
+19. How do you count unique values in a column?
+“I use COUNT(DISTINCT column) to get the number of unique entries.”
+20. How do you filter for top-N records per group?
+“I use window functions like ROW_NUMBER() or RANK() and filter for values <= N in a
+subquery.”
+21. How do you get percentage of total in SQL?
+“I divide each value by the SUM over the whole table, often using window functions.”
+22. How do you handle division by zero in aggregates?
+“I use CASE or NULLIF to avoid dividing by zero—like division by NULLIF(denominator, 0).”
+23. Can you nest aggregate functions?
+“Most databases don’t allow direct nesting, but I can aggregate once, then aggregate the
+results.”
+24. What is the use of CASE in aggregation?
+“I use CASE to do conditional counting or sums—like SUM(CASE WHEN x = ‘A’ THEN 1 ELSE 0
+END).”
+25. How do you calculate min/max per group?
+“I use MIN() or MAX() in GROUP BY queries.”
+26. What’s the difference between SUM and COUNT?
+“SUM adds up values; COUNT tallies rows or non-NULLs.”
+27. How do you get a cumulative sum?
+“Using SUM() OVER(ORDER BY ...) as a window function.”
+28. What is a sliding window in SQL?
+“It’s a moving set of rows—like the previous 3, current, and next 2 rows—used in analytics
+and moving calculations.”
+29. How can you aggregate conditionally?
+“By using CASE inside aggregate functions to only count or sum based on conditions.”
+30. What is a filtered aggregate?
+“An aggregate that includes only rows matching a condition—usually with CASE WHEN or
+FILTER (WHERE ...).”
+31. How do you exclude groups with fewer than N records?
+“I use HAVING COUNT(*) >= N to only show large enough groups.”
+32. Can you use window functions with GROUP BY?
+“Yes, but the window function runs after grouping—so they operate on the grouped result.”
+33. How do you rank within partitions?
+“I use RANK(), DENSE_RANK(), or ROW_NUMBER() OVER(PARTITION BY ...).”
+34. What’s the default sort order for aggregates?
+“There’s no guaranteed order unless I specify ORDER BY.”
+35. How do you filter nulls before aggregation?
+“I use WHERE to exclude them up front.”
+36. What is a correlated subquery and when is it used in aggregation?
+“It’s a subquery that references the main query—useful for comparing each row to group
+aggregates.”
+37. What’s the use of COALESCE in grouping?
+“COALESCE replaces NULLs with a default value—useful for clean reporting or grouping
+NULLs as a category.”
+38. How can you pivot or unpivot data in SQL?
+“Using CASE or PIVOT/UNPIVOT operators to convert rows to columns and vice versa.”
+39. What’s the impact of grouping on performance?
+“GROUP BY can be slow on large tables, especially if grouping on non-indexed columns.”
+40. How do you debug errors in aggregation queries?
+“I check for missing GROUP BY columns, incorrect aggregation, and test each part
+separately.”
+41. How do you summarize data at different levels of granularity?
+“By using multiple GROUP BY queries, or grouping sets, CUBE, or ROLLUP.”
+42. What are analytical vs aggregate functions?
+“Aggregate functions summarize groups into one row. Analytical (window) functions return a
+value for each row, considering other rows.”
+43. Can you use window functions in WHERE or HAVING?
+“No, but I can use them in SELECT or ORDER BY, and filter them in subqueries.”
+44. How do you handle time-based grouping?
+“I use DATEPART, EXTRACT, or format dates to group by day, month, year, etc.”
+45. How do you deal with duplicate data in aggregates?
+“I use DISTINCT in aggregation or remove duplicates before aggregating.”
+46. What’s the best way to check for outliers in grouped data?
+“Calculate mean, median, and standard deviation, then filter for groups outside expected
+ranges.”
+47. What’s the role of NULLIF in SQL aggregation?
+“NULLIF turns a value to NULL when two expressions are equal—useful to avoid divide-byzero or skip unwanted values.”
+48. Can you filter on aggregate results?
+“Yes, with the HAVING clause.”
+49. What is a sub-total and how do you create it in SQL?
+“Sub-totals are group-level sums or counts. I use GROUP BY with CUBE or ROLLUP for
+automatic subtotals.”
+50. How do you compare aggregates across groups?
+“By joining or using window functions, or comparing group values to overall totals.”
+D. Window Functions (First 50+)
+1. What is a window function?
+“It’s a function that performs calculations across rows related to the current row, without
+collapsing the result set.”
+2. What’s the difference between window and aggregate functions?
+“Aggregate functions reduce rows to one per group; window functions return a value for
+each row, but considering its ‘window’.”
+3. Name some common window functions.
+“ROW_NUMBER(), RANK(), DENSE_RANK(), SUM() OVER(), AVG() OVER(), LAG(), LEAD(),
+FIRST_VALUE(), LAST_VALUE().”
+4. What is PARTITION BY and how is it used?
+“It divides the result set into partitions for window functions to operate over, like getting
+ranks per department.”
+5. What does ORDER BY do in window functions?
+“It specifies the order of rows in the window, affecting calculations like running totals or
+ranking.”
+6. What’s the difference between ROW_NUMBER() and RANK()?
+“ROW_NUMBER() always gives unique sequential numbers; RANK() gives the same rank to
+ties but skips numbers after ties.”
+7. What does DENSE_RANK() do?
+“It’s like RANK() but doesn’t skip numbers after ties, so it’s always consecutive.”
+8. How do you create a moving average using window functions?
+“I use AVG(column) OVER(ORDER BY date ROWS BETWEEN N PRECEDING AND CURRENT
+ROW).”
+9. What’s the default window frame if none is specified?
+“RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW—meaning from the start
+of the partition up to the current row.”
+10. Can you use window functions with GROUP BY?
+“Yes, but window functions work on the grouped result, not raw rows.”
+11. What is LAG() and LEAD()? Give examples.
+“LAG() fetches a value from a previous row; LEAD() gets one from a next row. Useful for
+period-over-period comparisons.”
+12. How do you calculate a running total with window functions?
+“SUM(column) OVER(ORDER BY ...) gives a running total per the specified order.”
+13. What is FIRST_VALUE() and LAST_VALUE()?
+“They return the first or last value in the current window partition.”
+14. Can you filter by window function results?
+“Not directly in WHERE, but I can use a subquery or CTE to filter on them.”
+15. How do you use NTILE() and what does it do?
+“NTILE(N) divides rows into N roughly equal buckets—handy for percentiles or quartiles.”
+16. What is the use of CUME_DIST() and PERCENT_RANK()?
+“They show a row’s relative standing—CUME_DIST() is the cumulative distribution;
+PERCENT_RANK() gives the percentage rank.”
+17. How can you assign row numbers per group?
+“ROW_NUMBER() OVER(PARTITION BY group_col ORDER BY ...) assigns numbers per group.”
+18. What’s the syntax for specifying window frames?
+“ROWS BETWEEN N PRECEDING AND CURRENT ROW, or RANGE BETWEEN. Lets me control
+the exact window size.”
+19. What is the difference between ROWS and RANGE in window frames?
+“ROWS is based on physical row count; RANGE is based on value ranges (e.g., dates).”
+20. How do window functions impact query performance?
+“They can be resource-intensive on big data, especially with complex partitions or orders—
+indexes help.”
+21. Can you use window functions in WHERE or HAVING?
+“No, only in SELECT, ORDER BY, or subqueries.”
+22. What is a sliding window and how do you define it?
+“It’s a dynamic frame of rows around each current row—like the last 3, current, and next 2
+rows.”
+23. Can you combine multiple window functions in one query?
+“Yes, I can calculate several window metrics in the same SELECT.”
+24. How does window function ordering affect results?
+“The ORDER BY in the window clause changes ranking and cumulative calculations.”
+25. When is PARTITION BY optional?
+“If omitted, the function considers all rows as one partition.”
+26. How do you calculate percent of total using window functions?
+“I divide each value by SUM(value) OVER() to get its share of the total.”
+27. How do you use window functions for cohort analysis?
+“I partition by cohort or user group and compute metrics per cohort using window
+functions.”
+28. What’s the difference between cumulative and moving calculations?
+“Cumulative sums include all prior rows; moving (rolling) sums or averages use a fixed
+window size.”
+29. Can window functions reference other windowed results?
+“No, but I can nest them via subqueries.”
+30. How can you debug window function logic errors?
+“I run intermediate queries, check partitions/orders, and compare expected vs. actual
+results.”
+31. How do you use window functions for ranking within subgroups?
+“By using PARTITION BY the subgroup column in the window function.”
+32. How does filtering affect window function results?
+“Filtering after calculation (in outer query) is safest to avoid missing data in the window
+frame.”
+33. Can you use window functions with joins?
+“Yes, often used for analytics on joined data sets.”
+34. What happens if you use window functions without an ORDER BY?
+“The calculation may be on all rows with no guaranteed order, so use ORDER BY for
+predictable results.”
+35. How are window functions used in reporting?
+“For trends, rankings, running totals, and period comparisons—all on detailed data.”
+36. How do you compare window function results to aggregates?
+“Window functions keep row-level details; aggregates collapse to one row per group.”
+37. How do you limit window function calculations to a subset of rows?
+“By adjusting the window frame (ROWS BETWEEN) or filtering the dataset first.”
+38. What’s the impact of data partitioning on window function output?
+“It resets the calculation per partition, so each group’s stats are calculated independently.”
+39. How do you find anomalies using window functions?
+“I compare each row’s value to moving averages, percentiles, or lag/lead values.”
+40. How do you simulate window functions if the DBMS doesn’t support them?
+“By using correlated subqueries or self-joins—but it’s much less efficient.”
+41. How do you explain window functions to a non-technical stakeholder?
+“I say they let us see summaries and details together—for example, each sale with the total
+sales for its region.”
+42. What’s the best use-case for window functions over subqueries?
+“When I need both detail and summary metrics in every row—like ranking or running totals.”
+43. What are the limitations of window functions?
+“Not all databases support them, and they can be slow on very large or unindexed tables.”
+44. How can window functions simplify complex reporting queries?
+“They eliminate the need for multiple joins or subqueries to get details and summaries side
+by side.”
+45. What’s the use of ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW?
+“It defines a cumulative window from the start of the partition to the current row.”
+46. How do you implement custom ranking logic using window functions?
+“By combining ORDER BY, PARTITION BY, and CASE expressions in the window clause.”
+47. How do you troubleshoot slow queries using window functions?
+“I check for missing indexes, large partitions, and unnecessary columns, and use EXPLAIN
+plans.”
+48. Can you nest window functions?
+“Not directly, but I can use subqueries to layer window functions.”
+49. What’s the difference between running total and moving average?
+“Running total adds all values up to current row; moving average averages a window of fixed
+size around each row.”
+50. When would you not use a window function?
+“When I only need summary data, not both summary and detail together—or if my database
+doesn’t support them.”
+E. Data Modeling & Design (First 50+)
+1. What is data modeling?
+“Data modeling is designing the structure of data—how tables relate, what keys and data
+types to use—so the database is efficient, consistent, and scalable.”
+2. What’s the difference between logical and physical data models?
+“Logical models define entities and relationships without worrying about implementation.
+Physical models add technical details like indexes, partitioning, and storage.”
+3. What is a star schema?
+“A star schema has a central fact table joined to dimension tables—ideal for analytics and
+reporting because it’s simple and fast for queries.”
+4. What is a snowflake schema?
+“It’s like a star schema but with normalized dimension tables—saving space but adding
+complexity to queries.”
+5. What is a dimension table?
+“It contains descriptive attributes, like customer names or dates, to provide context to facts.”
+6. What is a fact table?
+“It stores measurable, quantitative data—like sales or transactions—with keys linking to
+dimensions.”
+7. What is normalization? Why is it important?
+“Normalization organizes data to reduce redundancy and avoid inconsistencies. It keeps data
+clean and easier to maintain.”
+8. What are surrogate keys and natural keys?
+“Surrogate keys are artificial, usually numeric IDs for joining tables. Natural keys use real
+business data, like an email or SSN.”
+9. What’s a slowly changing dimension?
+“It’s a dimension where attribute values change slowly over time, like customer address
+history. We handle these using different modeling strategies (Type 1, 2, 3).”
+10. How do you handle one-to-many and many-to-many relationships?
+“One-to-many: foreign key in the child table. Many-to-many: use a junction table with
+foreign keys to both parents.”
+11. What is a bridge table?
+“A bridge (junction) table resolves many-to-many relationships, linking rows from two
+tables.”
+12. What is data redundancy?
+“It’s storing the same data in multiple places—usually bad for consistency, except when
+denormalization is needed for performance.”
+13. How do you enforce referential integrity in a schema?
+“By using foreign key constraints, making sure references always point to valid rows.”
+14. What is a composite key and when do you use it?
+“A composite key uses two or more columns as a primary key—used when no single column
+is unique.”
+15. What’s denormalization and when is it beneficial?
+“It’s the reverse of normalization—adding redundancy to speed up reads, common in data
+warehousing.”
+16. What is data granularity?
+“It’s the level of detail in the data—fine granularity means more detail; coarse granularity is
+more summarized.”
+17. What are indexes and how do they affect design?
+“Indexes speed up lookups but can slow down writes. I balance index use depending on
+query patterns.”
+18. What’s the impact of data types on model performance?
+“Choosing the right data types saves space and improves performance; for example, using
+INT instead of VARCHAR for IDs.”
+19. What’s the purpose of constraints in table design?
+“Constraints enforce business rules and ensure data integrity, like NOT NULL, UNIQUE,
+CHECK, and FOREIGN KEY.”
+20. What is a lookup table and why is it useful?
+“It standardizes reference data, like codes or categories, making queries and reports more
+consistent.”
+21. What’s the difference between OLTP and OLAP databases?
+“OLTP is for transactions—lots of small reads/writes. OLAP is for analytics—big, complex
+queries on lots of data.”
+22. What’s data warehouse vs data mart?
+“A data warehouse is the big, central store; data marts are smaller, focused subsets for
+specific business units.”
+23. How do you handle historical data in modeling?
+“By adding effective dates or using slowly changing dimension techniques.”
+24. What is schema-on-read vs schema-on-write?
+“Schema-on-write enforces structure when data is stored (SQL DBs). Schema-on-read applies
+structure when data is queried (big data/NoSQL).”
+25. What’s data lineage?
+“It’s tracking where data comes from, how it changes, and where it goes—critical for
+governance and audits.”
+26. How do you document a data model?
+“I use ER diagrams, data dictionaries, and written descriptions of entities, relationships, and
+business rules.”
+27. What is cardinality?
+“It’s the uniqueness of values in a column—high cardinality means lots of unique values, like
+IDs.”
+28. What’s a junk dimension?
+“A dimension that groups miscellaneous attributes that don’t fit elsewhere—reduces clutter
+in the main model.”
+29. What’s a degenerate dimension?
+“A dimension that’s stored in the fact table itself, usually an order number or transaction ID.”
+30. How do you handle hierarchies in data models?
+“By modeling parent/child relationships or using bridge tables for complex hierarchies.”
+31. What’s the purpose of surrogate keys?
+“They provide simple, unique identifiers, making joins and indexing faster and easier.”
+32. What is factless fact table?
+“A table that records the occurrence of events without a measure—like student attendance
+or shipment events.”
+33. How do you optimize data models for reporting?
+“By denormalizing, adding indexes, and designing for common access patterns.”
+34. What’s the impact of partitioning on design?
+“Partitioning divides tables for faster access and easier management, but complicates
+queries and maintenance.”
+35. What’s sharding and when is it used?
+“Sharding splits data across multiple databases or servers, used to scale horizontally for huge
+datasets.”
+36. What’s the role of data dictionaries?
+“They describe each table and column, making the model easier to understand and
+maintain.”
+37. How do you maintain data quality in models?
+“By enforcing constraints, validation rules, and regular audits.”
+38. What’s data governance?
+“Processes and policies that ensure data is accurate, available, secure, and used responsibly.”
+39. What’s the importance of metadata?
+“Metadata describes data—its source, format, usage—which is essential for integration and
+compliance.”
+40. How do you model time-based data?
+“Using date/time dimensions, period columns, and sometimes time-stamped fact tables.”
+41. How do you handle schema evolution?
+“By versioning models, using migration scripts, and designing for backward compatibility.”
+42. What is normalization’s effect on performance?
+“It reduces redundancy and saves space, but can slow down reads due to more joins.”
+43. What’s the use of materialized views in modeling?
+“They precompute and store complex queries, making reporting much faster.”
+44. How do you handle reference data?
+“By storing it in separate lookup tables and maintaining consistent codes and descriptions.”
+45. What’s the best practice for naming conventions?
+“Consistent, descriptive names for tables and columns—makes models clear and
+maintainable.”
+46. What’s data stewardship?
+“Appointing people responsible for the quality, security, and use of data.”
+47. What is conformed dimension?
+“A dimension shared across multiple fact tables or data marts—ensures consistency in
+reporting.”
+48. What’s a mini-dimension?
+“A small, rapidly changing dimension broken off from a larger one—helps manage volatile
+attributes.”
+49. How do you handle late-arriving data?
+“By allowing updates or inserts for past periods, and sometimes using special flags or staging
+tables.”
+50. What’s the impact of denormalization on write and read performance?
+“Denormalization speeds up reads but can slow writes and increase data maintenance
+effort.”
+F. Performance & Optimization (First 50+)
+1. What factors affect SQL query performance?
+“Indexes, query structure, table size, hardware, and server configuration all impact query
+speed.”
+2. How do indexes improve performance?
+“They let the database quickly find rows without scanning the whole table—like an index in a
+book.”
+3. What are the downsides of too many indexes?
+“They slow down inserts, updates, and deletes, and consume extra storage.”
+4. How does indexing affect INSERT/UPDATE speed?
+“Every change to data also updates indexes, so too many indexes make writes slower.”
+5. How do you analyze a query plan?
+“I use EXPLAIN or similar commands to see how the database runs the query and where time
+is spent.”
+6. What is a clustered index? Non-clustered index?
+“A clustered index determines the physical order of rows; each table has one. Non-clustered
+indexes are separate and just point to the data.”
+7. What is an execution plan and why is it important?
+“It shows how a query will run—knowing the plan helps me spot bottlenecks and optimize
+queries.”
+8. What’s the use of EXPLAIN or EXPLAIN PLAN?
+“They let me view and analyze the query execution plan, so I can tune queries for speed.”
+9. How do you reduce table scans?
+“By using indexes, filtering early, and selecting only needed columns.”
+10. What is query caching and how does it work?
+“The database stores results of frequent queries to serve them faster next time.”
+11. What is a covering index?
+“An index that contains all columns needed for a query, so the database never has to read
+the table itself.”
+12. What’s parameter sniffing?
+“The optimizer chooses a plan based on first parameters seen, which can cause slowdowns if
+later queries are very different.”
+13. How do you avoid locking and blocking?
+“By keeping transactions short, indexing well, and avoiding long-running update queries.”
+14. What is deadlock and how do you prevent it?
+“Two queries block each other indefinitely. I prevent it by updating tables in the same order
+and keeping transactions brief.”
+15. What’s the difference between OLTP and OLAP performance tuning?
+“OLTP tuning focuses on fast writes and small queries; OLAP tuning focuses on fast reads and
+aggregates over large datasets.”
+16. How do you optimize joins for speed?
+“I join on indexed keys, filter early, and avoid joining huge tables unnecessarily.”
+17. How do you optimize GROUP BY or aggregation queries?
+“By indexing group-by columns and pre-aggregating data where possible.”
+18. What is denormalization’s effect on performance?
+“It speeds up reads at the expense of extra storage and more work during data changes.”
+19. How do you optimize queries on large datasets?
+“By filtering early, indexing smartly, partitioning tables, and breaking queries into
+manageable chunks.”
+20. How do you avoid N+1 problems?
+“By using joins and subqueries to fetch all needed data at once, rather than in a loop.”
+21. How does partitioning help with performance?
+“It splits big tables into smaller, more manageable pieces, speeding up queries and
+maintenance.”
+22. *What are the risks of using SELECT ?
+“It can return unnecessary data, waste bandwidth, and break queries if columns change.”
+23. What’s the impact of subqueries on performance?
+“They can be slower if not optimized, especially correlated subqueries—sometimes joins are
+faster.”
+24. How do you measure query execution time?
+“Most tools provide execution time; I also use SET STATISTICS TIME ON or timing functions.”
+25. How do you debug slow queries?
+“By analyzing the execution plan, checking indexes, and testing with different filters.”
+26. What is the importance of statistics in optimization?
+“The database uses statistics to choose the best plan; outdated stats can lead to slow
+queries.”
+27. What is query parallelism?
+“Splitting a query into parts to run on multiple CPUs or servers, which can speed up big
+queries.”
+28. How does data skew affect performance?
+“If a few values appear much more than others, it can make indexes less useful and slow
+down queries.”
+29. What are the benefits of query hints?
+“I can force the database to use certain indexes or join strategies, but overuse can hurt in the
+long run.”
+30. What is a temp table? When to use it?
+“A temp table is a short-lived table used to store intermediate results—great for breaking up
+complex logic.”
+31. How do you minimize network traffic in SQL queries?
+“I only select needed columns and rows, avoiding SELECT * and big result sets.”
+32. How do you avoid reading unnecessary data?
+“I filter with WHERE, select only needed columns, and use indexes.”
+33. How can you batch update data for performance?
+“By updating in chunks or using bulk update statements, rather than row by row.”
+34. What’s the effect of transaction size on performance?
+“Large transactions can lock lots of rows and use more resources—smaller, frequent commits
+are often better.”
+35. What are best practices for writing efficient SQL?
+“Filter early, use proper indexes, avoid SELECT *, keep joins simple, and write readable code.”
+36. How do you optimize ORDER BY queries?
+“By indexing the columns used in ORDER BY and limiting the number of sorted rows.”
+37. What’s the risk of cursors in SQL?
+“They process one row at a time—usually much slower than set-based SQL.”
+38. How do you optimize views for performance?
+“Limit complexity, avoid unnecessary joins, and index underlying tables.”
+39. How do you handle slow queries in production?
+“By logging, analyzing execution plans, tuning indexes, and sometimes rewriting the query
+logic.”
+40. How do you use indexing for composite keys?
+“By creating multi-column indexes that match the most common filter and join patterns.”
+41. How do you archive or purge data efficiently?
+“By partitioning tables and dropping old partitions, or using bulk delete operations.”
+42. What is table partitioning and its effect?
+“It splits a table into parts by key (like date), so queries only scan relevant data.”
+43. What’s the effect of normalization on read and write speed?
+“Normalization improves writes (less duplication), but can slow reads due to more joins.”
+44. How do you benchmark database performance?
+“By running test workloads and measuring query times, throughput, and resource usage.”
+45. How do you prevent table fragmentation?
+“By rebuilding or reorganizing indexes and regularly maintaining the database.”
+46. How do you update statistics on indexes/tables?
+“Most databases update stats automatically, but I can trigger manual updates as needed.”
+47. How do you tune server memory for SQL performance?
+“I allocate enough memory for caching and sorting, based on workload and database size.”
+48. How do you identify resource bottlenecks?
+“By monitoring CPU, memory, I/O, and query execution—tools like Activity Monitor or
+custom scripts help.”
+49. How do you balance normalization and performance?
+“I normalize for integrity, but denormalize selectively where reads are slow and redundancy
+is acceptable.”
+50. What are key metrics to monitor for database performance?
+“Query response time, CPU, memory, I/O, index usage, locking/blocking, and database
+growth.”
+G. 100 Mixed SQL Interview Questions (Sample Answers, No Code)
+1. How do you ensure data integrity in SQL?
+“By using primary and foreign key constraints, validation rules, and transactions.”
+2. What’s the role of constraints in table design?
+“They enforce business rules and prevent invalid data.”
+3. How do NULLs affect joins and aggregates?
+“NULLs prevent matches in joins and are ignored by most aggregates.”
+4. What’s the best way to remove duplicates in SQL?
+“Use DISTINCT or ROW_NUMBER() to filter out extra copies.”
+5. How does indexing improve query performance?
+“Indexes help the database quickly find data, reducing scan time.”
+6. What’s the difference between WHERE and HAVING?
+“WHERE filters before aggregation, HAVING filters after.”
+7. How do you handle schema changes in production?
+“With versioned scripts, off-peak deployments, and good backups.”
+8. What’s the difference between UNION and UNION ALL?
+“UNION removes duplicates, UNION ALL keeps them.”
+9. How do you write a query to find unmatched rows between two tables?
+“Use LEFT JOIN and filter for NULLs on the right side.”
+10. What are window functions and when do you use them?
+“They compute metrics across rows while retaining detail, great for running totals, ranks, and
+comparisons.”
+11. How do you detect missing foreign key references?
+“Find rows where the foreign key does not exist in the parent table using LEFT JOIN.”
+12. How can you update millions of rows efficiently?
+“By batching updates and indexing properly.”
+13. What is referential integrity and how is it enforced?
+“Making sure foreign keys always point to valid primary keys.”
+14. What’s the use of EXPLAIN PLAN?
+“To see how the database will run a query and find optimization opportunities.”
+15. How do you summarize large amounts of data?
+“Using GROUP BY, aggregates, and sometimes materialized views.”
+16. How do you design a star schema?
+“One central fact table with foreign keys to dimension tables.”
+17. What is a bridge table and why use it?
+“To handle many-to-many relationships.”
+18. What is the risk of SELECT * in queries?
+“It brings extra columns, uses more bandwidth, and breaks if the schema changes.”
+19. How do you avoid SQL injection?
+“By always using parameterized queries.”
+20. How do you implement soft deletes?
+“By marking a row as deleted with a flag, instead of removing it.”
+21. What’s the use of views for security?
+“They can restrict access to sensitive columns and simplify permissions.”
+22. How do you analyze slow queries?
+“By checking execution plans and monitoring index usage.”
+23. How does normalization reduce redundancy?
+“By storing each fact only once and referencing it with keys.”
+24. What’s the risk of denormalization?
+“Data inconsistencies and more work during updates.”
+25. How do you handle large data loads?
+“By using bulk load utilities and staging tables.”
+26. What’s a fact table vs a dimension table?
+“Fact table = measures, Dimension table = descriptive context.”
+27. What’s a composite index?
+“An index on multiple columns—useful when queries filter on all those columns.”
+28. How do you schedule recurring SQL jobs?
+“Using the database’s job scheduler, like SQL Server Agent.”
+29. How do you log or audit database changes?
+“With triggers or dedicated audit tables.”
+30. What’s the impact of time zones in reporting?
+“Incorrect time zones can cause reporting errors—always store times with time zone info.”
+31. How do you manage schema evolution?
+“By tracking changes, using migration scripts, and maintaining good documentation.”
+32. How do you document SQL logic for teams?
+“With comments, data dictionaries, and clear ER diagrams.”
+33. What’s the use of metadata in SQL?
+“It describes the data’s meaning, origin, and usage—critical for data quality and governance.”
+34. How do you handle changing business rules in queries?
+“I modularize logic and document rule changes for easy updates.”
+35. How do you automate data quality checks?
+“With scripts, triggers, or scheduled jobs to scan for invalid data.”
+36. What’s the best way to bulk insert data?
+“Use bulk load tools and disable indexes during the load if possible.”
+37. How do you secure sensitive columns in SQL?
+“By restricting permissions, using encryption, and views.”
+38. What is a temp table and when to use it?
+“A table for short-lived, intermediate data—good for breaking up complex queries.”
+39. What’s a recursive query and when is it needed?
+“A query that references itself, often using CTEs—for example, to traverse hierarchies.”
+40. How do you handle outliers in reporting?
+“By filtering or flagging them with statistical thresholds.”
+41. How do you back up and restore databases?
+“Using the built-in backup and restore commands or tools.”
+42. How do you handle deadlocks?
+“By designing queries to avoid conflicts and keeping transactions brief.”
+43. What’s the use of transactions in ETL?
+“They ensure all ETL steps succeed or roll back together for data integrity.”
+44. What’s the impact of data skew?
+“Skew can slow down queries and make indexing less effective.”
+45. How do you partition a table?
+“By splitting data into segments based on key values (like date).”
+46. What’s an orphan record and how do you fix it?
+“A row with a foreign key pointing nowhere; fix by deleting or correcting the record.”
+47. How do you do SCD (slowly changing dimension) handling?
+“By adding effective dates or version columns to track changes over time.”
+48. How do you validate referential integrity?
+“By running checks for foreign key violations and using constraints.”
+49. How do you design audit tables?
+“I include columns for action, timestamp, user, and old/new values.”
+50. What’s a surrogate key and why use it?
+“It’s a numeric ID used to uniquely identify rows—fast, simple, and avoids business key
+issues.”
