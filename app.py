@@ -2,10 +2,9 @@ import os
 import re
 from flask import Flask, render_template_string, request, redirect, url_for, send_from_directory, flash
 from werkzeug.utils import secure_filename
-from PyPDF2 import PdfReader
 
 UPLOAD_FOLDER = 'uploads'
-ALLOWED_EXTENSIONS = {'pdf', 'txt'}
+ALLOWED_EXTENSIONS = {'txt'}
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -15,8 +14,8 @@ app.secret_key = 'supersecretkey'  # Needed for flash messages
 
 HTML = '''
 <!doctype html>
-<title>PDF/TXT Search App</title>
-<h2>Upload PDFs or TXT files and Search Their Content</h2>
+<title>TXT File Search App</title>
+<h2>Upload TXT files and Search Their Content</h2>
 <form method=post enctype=multipart/form-data action="/upload">
   <input type=file name=file multiple required>
   <input type=submit value=Upload>
@@ -32,7 +31,7 @@ HTML = '''
 {% endwith %}
 
 {% if files %}
-  <h4>Uploaded Files:</h4>
+  <h4>Uploaded TXT files:</h4>
   <ul>
     {% for f in files %}
       <li><a href="{{ url_for('download_file', filename=f) }}">{{ f }}</a></li>
@@ -44,7 +43,7 @@ HTML = '''
   </form>
 {% endif %}
 
-{% if results %}
+{% if results is not none %}
   <h3>Results for: "{{ request.args.get('query', '') }}"</h3>
   <ul>
   {% for filename, snippet in results %}
@@ -62,29 +61,18 @@ HTML = '''
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def extract_text_from_files(file_list):
+def extract_text_from_txts(txt_paths):
     text_data = []
-    for fname in file_list:
-        ext = fname.rsplit('.', 1)[1].lower()
-        file_path = os.path.join(UPLOAD_FOLDER, fname)
+    for txt_path in txt_paths:
         try:
-            if ext == "pdf":
-                reader = PdfReader(file_path)
-                full_text = ""
-                for page in reader.pages:
-                    t = page.extract_text()
-                    if t:
-                        full_text += t + "\n"
-                text_data.append({"filename": fname, "content": full_text})
-            elif ext == "txt":
-                with open(file_path, "r", encoding="utf-8") as f:
-                    full_text = f.read()
-                text_data.append({"filename": fname, "content": full_text})
+            with open(os.path.join(UPLOAD_FOLDER, txt_path), encoding="utf-8") as f:
+                full_text = f.read()
+            text_data.append({"filename": txt_path, "content": full_text})
         except Exception as e:
-            print(f"Failed to extract from {fname}: {e}")
+            print(f"Failed to extract from {txt_path}: {e}")
     return text_data
 
-def search_files(text_data, query):
+def search_txts(text_data, query):
     results = []
     pattern = re.compile(re.escape(query), re.IGNORECASE)
     for doc in text_data:
@@ -98,12 +86,12 @@ def search_files(text_data, query):
 
 @app.route("/", methods=["GET"])
 def index():
-    files = os.listdir(UPLOAD_FOLDER)
+    files = [f for f in os.listdir(UPLOAD_FOLDER) if f.lower().endswith('.txt')]
     results = None
     query = request.args.get('query', '').strip()
     if query and files:
-        text_data = extract_text_from_files(files)
-        results = search_files(text_data, query)
+        text_data = extract_text_from_txts(files)
+        results = search_txts(text_data, query)
     return render_template_string(HTML, files=files, results=results)
 
 @app.route("/upload", methods=["POST"])
