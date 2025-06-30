@@ -1,0 +1,960 @@
+A. Basics & Datatypes (1–51)
+1. What are the basic built-in data types in Python?
+“In Python, the basic built-in data types are integers, floats, strings, booleans, lists, tuples,
+sets, and dictionaries. Each serves a different purpose in storing and manipulating data.”
+2. How is a list different from a tuple?
+“A list is mutable, meaning you can change its contents after creation, while a tuple is
+immutable and its values cannot be altered once set.”
+3. What are sets and how are they used in Python?
+“Sets are unordered collections of unique elements, useful for removing duplicates and
+performing set operations like union, intersection, and difference.”
+4. What is mutability? Which types are mutable/immutable?
+“Mutability refers to whether an object can be changed after creation. Lists, sets, and
+dictionaries are mutable; tuples, strings, and numbers are immutable.”
+5. How does slicing work for lists and strings?
+“Slicing allows you to extract a portion of a list or string using the syntax [start:stop:step]. It’s
+commonly used to get sublists or substrings.”
+6. What is the difference between is and == in Python?
+“== checks if the values are equal, while is checks if two references point to the same object
+in memory.”
+7. How are dictionaries implemented? What are common dict use cases?
+“Dictionaries are implemented as hash tables and store key-value pairs. I use them for fast
+lookups and to map unique keys to values, like user IDs to profiles.”
+8. How do you check the type of a variable?
+“I use the type() function to check an object’s type, for example, type(my_var).”
+9. What’s the difference between shallow and deep copy?
+“A shallow copy copies only the outer object, so inner objects are shared, while a deep copy
+copies everything recursively. For deep copies, I use copy.deepcopy().”
+10. How do you convert a string to an integer, and vice versa?
+“I use int('123') to convert a string to an integer, and str(123) to convert an integer to a
+string.”
+11. What is a frozenset? When would you use it?
+“A frozenset is an immutable set. I use it when I need a set that can be used as a dictionary
+key or stored in another set.”
+12. Explain the concept of “truthy” and “falsy” values in Python.
+“In Python, values like 0, None, '', and empty collections are falsy, while most other values
+are truthy, meaning they evaluate to True in boolean contexts.”
+13. How does Python handle memory management for objects?
+“Python uses automatic memory management with reference counting and a garbage
+collector to clean up unused objects.”
+14. Can a tuple contain mutable objects?
+“Yes, a tuple can contain mutable objects like lists; the tuple itself is immutable, but its
+contents can be changed if they’re mutable.”
+15. How do you create a nested list? What are use cases?
+“I can create nested lists by placing lists inside another list. I use them for representing
+matrices or hierarchical data.”
+16. When would you use a tuple instead of a list?
+“I use a tuple when I want an immutable sequence, for example as a fixed configuration or as
+a dictionary key.”
+17. How do you iterate over both keys and values in a dict?
+“I use the .items() method, like for key, value in my_dict.items().”
+18. What is list comprehension and why is it useful?
+“List comprehension is a concise way to create lists by applying an expression to each item in
+an iterable. It’s efficient and improves code readability.”
+19. What’s the difference between append and extend for lists?
+“append adds a single element to the end of the list, while extend adds each element of an
+iterable to the list.”
+20. How do you remove items from a list while iterating?
+“I avoid removing items directly while iterating to prevent errors. Instead, I use list
+comprehensions to create a filtered copy.”
+21. Explain the concept of unpacking in Python.
+“Unpacking lets me assign elements of a collection to variables in a single statement, like a, b
+= [1, 2].”
+22. How do you merge two dictionaries?
+“In Python 3.9+, I use the merge operator: dict1 | dict2. In earlier versions, I use
+dict1.update(dict2).”
+23. What happens if you try to access a missing key in a dict?
+“If I use dict[key] and the key is missing, I get a KeyError. With dict.get(key), it returns None
+or a default value.”
+24. What is a generator? How does it differ from a list?
+“A generator produces items one at a time and doesn’t store them in memory, which is
+efficient for large datasets. A list holds all items at once.”
+25. How do you reverse a list or string?
+“For lists, I use my_list[::-1] or .reverse(). For strings, I use slicing: my_str[::-1].”
+26. What are “identity”, “equality”, and “membership” operators?
+“Identity (is) checks object identity, equality (==) checks value, and membership (in) checks if
+a value is in a collection.”
+27. Explain the difference between a string and bytes.
+“A string is a sequence of Unicode characters; bytes is a sequence of raw 8-bit values. I use
+bytes for binary data.”
+28. How do you sort a list of tuples by the second element?
+“I use sorted(list_of_tuples, key=lambda x: x[1]).”
+29. What are the pros and cons of using sets?
+“Sets offer fast membership tests and automatic duplicate removal, but they are unordered
+and can’t store mutable types.”
+30. How does Python handle large integers?
+“Python integers are arbitrary-precision, so they grow as needed without overflow.”
+31. What’s the role of enumerate in for loops?
+“enumerate gives me both index and value when iterating, which is helpful for tracking
+positions.”
+32. How do you remove duplicates from a list?
+“I convert the list to a set and back: list(set(my_list)).”
+33. How do you access elements from nested dictionaries?
+“I use chained indexing: dict['outer']['inner']. For safety, I might use .get().”
+34. How does Python handle Unicode and encoding in strings?
+“Strings are Unicode by default; I can encode/decode with .encode() and .decode() for file or
+network I/O.”
+35. What’s the difference between pop() and remove() for lists?
+“pop() removes by index and returns the item; remove() deletes the first occurrence of a
+value.”
+36. Explain the use of default values in dict.get().
+“dict.get(key, default) returns the value if the key exists, or the default if it doesn’t,
+preventing KeyErrors.”
+37. What are the implications of using mutable objects as default function arguments?
+“If I use a mutable object as a default argument, all calls share the same object, which can
+cause unexpected behavior.”
+38. When is it appropriate to use a namedtuple?
+“I use namedtuple when I want immutable, self-documenting records with named fields and
+tuple performance.”
+39.
+40. B. NumPy Arrays (1–50)
+41. What is NumPy and why is it used?
+“NumPy is a Python library for efficient numerical computations, especially on large arrays
+and matrices; I use it for fast math and vectorized operations.”
+42. How is a NumPy array different from a Python list?
+“A NumPy array is homogenous (one type), supports fast vectorized math, and takes up less
+memory compared to a Python list.”
+43. How do you create a NumPy array from a list or tuple?
+“I use np.array(list_or_tuple) to convert it into a NumPy array.”
+44. What is broadcasting in NumPy?
+“Broadcasting automatically stretches arrays of different shapes for elementwise operations,
+saving me from manually expanding dimensions.”
+45. How do you access and modify elements of a NumPy array?
+“I use standard indexing and slicing, like arr[1,2] to get or set elements.”
+46. Explain the concept of array shape and dimensionality.
+“The shape is a tuple representing the array’s size along each axis (e.g., (3,4)), while
+dimensionality is the number of axes or levels.”
+47. What is the difference between reshape and resize?
+“reshape returns a new view or copy with a new shape, while resize changes the shape inplace, possibly altering data.”
+48. How do you generate an array of zeros, ones, or a constant?
+“I use np.zeros(shape), np.ones(shape), or np.full(shape, constant).”
+49. What are vectorized operations? Give examples.
+“They allow me to apply math to entire arrays at once, like a + b or a * 2, which is much
+faster than looping.”
+50. How do you slice and index multi-dimensional arrays?
+“I use comma-separated indices, like arr[2,1] for element or arr[:, 0] for a column.”
+51. What’s the role of dtype in NumPy arrays?
+“dtype defines the type of elements in the array, such as float32 or int64; it affects memory
+and precision.”
+52. How do you convert between types (e.g., int to float) in NumPy?
+“I use .astype(new_type) to convert array elements to a different type.”
+53. How do you concatenate or split arrays?
+“I use np.concatenate, np.vstack, np.hstack to join, and np.split or np.array_split to split
+arrays.”
+54. What is a masked array?
+“It’s an array where some values are ‘masked out’ or ignored in computations, useful for
+handling missing data.”
+55. What’s the difference between shallow and deep copy in NumPy?
+“A shallow copy or view shares memory, so changes reflect in both; a deep copy duplicates
+all data.”
+56. How do you handle missing values in a NumPy array?
+“I use np.isnan() to detect NaNs and can replace them with np.nan_to_num or masking.”
+57. What are views in NumPy? How do they differ from copies?
+“A view references the same data as the original; a copy allocates new memory. Modifying a
+view changes the original.”
+58. How do you generate random numbers with NumPy?
+“I use np.random methods, like np.random.rand() for uniform or np.random.randn() for
+normal distribution.”
+59. How do you perform matrix multiplication?
+“I use np.dot(a, b) or the @ operator for matrix multiplication.”
+60. How do you compute statistical summaries (mean, median, std)?
+“I use methods like arr.mean(), arr.median(), arr.std(), optionally along specific axes.”
+61. What’s the use of np.where()?
+“np.where() returns indices or elements where a condition is true, useful for conditional
+filtering or replacement.”
+62. How can you flatten a multidimensional array?
+“I use arr.flatten() or arr.ravel() to collapse it to 1D.”
+63. How do you select rows or columns conditionally?
+“I use boolean indexing, e.g., arr[arr[:,1]>0] to filter rows.”
+64. What is broadcasting and when can it fail?
+“Broadcasting works when shapes are compatible, but fails if dimensions can’t be stretched
+to match; both arrays must align from the right.”
+65. How does NumPy handle elementwise comparisons?
+“It returns a boolean array where each value indicates if the condition is met for each
+element.”
+66. How do you sort or argsort an array?
+“I use np.sort() for sorted output and np.argsort() for the indices that sort the array.”
+67. What are structured arrays?
+“They’re arrays with compound datatypes, like columns in a table; each element can be a
+tuple with named fields.”
+68. What’s the difference between shape and size?
+“Shape is the dimensions of the array (like 3x2), and size is the total number of elements.”
+69. How do you reverse an array?
+“I use slicing with a negative step: arr[::-1].”
+70. How do you save and load arrays from files?
+“I use np.save()/np.load() for binary files, and np.savetxt()/np.loadtxt() for text files.”
+71. Explain the use of np.unique().
+“np.unique() returns sorted unique values from an array, often used for deduplication or
+classification.”
+72. How do you compute the dot product of two arrays?
+“I use np.dot(a, b) for dot product, which is key in linear algebra.”
+73. How do you change the axis of operation for aggregation?
+“I specify the axis argument, like arr.sum(axis=0) for columns or axis=1 for rows.”
+74. What’s the fastest way to find non-zero elements?
+“I use np.nonzero(arr) to get the indices of all non-zero values.”
+75. How do you tile or repeat arrays?
+“np.tile() repeats an array a given number of times; np.repeat() repeats elements.”
+76. How do you pad an array?
+“I use np.pad() to add padding (e.g., zeros) around the array edges.”
+77. How do you mask/filter an array by condition?
+“I use boolean indexing: arr[condition] gives only elements that meet the condition.”
+78. How can you detect NaNs or infinities in an array?
+“I use np.isnan(arr) and np.isinf(arr).”
+79. What’s the difference between np.array() and np.asarray()?
+“np.array() always copies data; np.asarray() avoids copying if the input is already a NumPy
+array.”
+80. When does memory sharing happen between arrays?
+“When I create a view (e.g., by slicing), memory is shared between arrays.”
+81. How do you stack arrays vertically or horizontally?
+“I use np.vstack() for vertical, np.hstack() for horizontal stacking.”
+82. How do you check if two arrays are equal?
+“I use np.array_equal(a, b) to compare all elements.”
+83. Explain the difference between a view and a copy.
+“A view reflects changes in the original array, but a copy is independent.”
+84. How does NumPy handle type promotion in operations?
+“If types differ, NumPy promotes them to a compatible type (e.g., int to float) for safe
+computation.”
+85. What are universal functions (ufuncs) in NumPy?
+“Ufuncs are fast, elementwise operations like add, multiply, etc., that work on entire arrays.”
+86. How do you generate linearly spaced values?
+“I use np.linspace(start, stop, num) for evenly spaced values.”
+87. What is stride in NumPy arrays?
+“Stride is the number of bytes to step in memory to move to the next element along each
+dimension.”
+88. How do you reshape arrays to add or remove axes?
+“I use reshape(), or add axes with np.newaxis or None.”
+89. How to efficiently compute elementwise logical operations?
+“I use NumPy’s logical ufuncs like np.logical_and() or np.logical_or().”
+90. How do you extract a diagonal or triangular matrix?
+“I use np.diag() for diagonals, and np.triu()/np.tril() for upper/lower triangular matrices.”
+91.
+92. C. Conditionals, Loops & Functions (1–50)
+93. What are the different types of conditionals in Python?
+“I use if, elif, and else statements to control flow based on conditions.”
+94. How does if-elif-else work?
+“Python checks each condition top to bottom and executes the first true block; else runs if
+no conditions are true.”
+95. How do you combine multiple conditions?
+“I use logical operators: and, or, not to combine conditions.”
+96. What is the purpose of the pass statement?
+“pass is a no-op; I use it as a placeholder when I need a syntactically valid block but don’t
+want to do anything.”
+97. What is the difference between for and while loops?
+“for loops iterate over sequences; while loops keep running as long as a condition is true.”
+98. How do you break out of a loop prematurely?
+“I use the break statement to exit a loop early.”
+99. What is the purpose of the continue statement?
+“continue skips the rest of the current iteration and moves to the next loop cycle.”
+100. How does loop-else work in Python?
+“The else block after a loop runs if the loop completes normally (no break).”
+101. How do you enumerate items in a loop?
+“I use enumerate(sequence) to get both index and value in a loop.”
+102. What are list comprehensions and how are they different from loops?
+“List comprehensions are compact, readable ways to generate lists; they’re more concise and
+often faster than regular loops.”
+103. How do you nest loops?
+“I write one loop inside another, for example, to process matrices or combinations.”
+104. When would you use a while loop instead of a for loop?
+“I use a while loop when I don’t know in advance how many iterations I need.”
+105. What are infinite loops and how to prevent them?
+“Infinite loops run forever if the condition is never false; I prevent them with break
+statements or correct condition logic.”
+106. How do you write a function in Python?
+“I use the def keyword, name, parameters, and an indented block with a return value if
+needed.”
+107. What are default and keyword arguments?
+“Default arguments assign a default value if not provided; keyword arguments let me specify
+arguments by name.”
+108. How does function scope work?
+“Variables defined inside a function are local to that function, unless declared global or
+nonlocal.”
+109. What is the purpose of return in functions?
+“return gives back a value to the caller and exits the function.”
+110. How do you document a function?
+“I use a docstring (triple quotes) below the function definition to describe what it does,
+parameters, and returns.”
+111. What is variable shadowing in Python functions?
+“If a local variable has the same name as a global one, the local ‘shadows’ or overrides the
+global within the function scope.”
+112. How do you define a lambda function?
+“I use the syntax lambda x: x + 1; it creates an anonymous, inline function.”
+113. How do you use *args and **kwargs?
+“*args collects positional arguments as a tuple; **kwargs collects keyword arguments as a
+dictionary.”
+114. How can you return multiple values from a function?
+“I return a tuple, like return x, y, z, and unpack on the calling side.”
+115. What are global and nonlocal keywords?
+“global lets me modify a global variable inside a function; nonlocal does the same for
+enclosing function variables in nested functions.”
+116. What are higher-order functions?
+“They take functions as arguments or return them; examples are map, filter, and decorators.”
+117. What’s the difference between a function and a method?
+“A function is independent; a method is bound to an object and can access its data.”
+118. How do you create and use closures?
+“I define a function inside another that captures variables from the outer scope, returning
+the inner function.”
+119. What is recursion? Give a real-world use.
+“A function calls itself to solve smaller instances of a problem, like computing factorials or
+traversing trees.”
+120. How does Python handle tail recursion?
+“Python doesn’t optimize for tail recursion, so deep recursion can cause a stack overflow.”
+121. What are decorators? How do you use them?
+“Decorators wrap functions to add behavior; I use the @decorator syntax above a function
+definition.”
+122. How do you avoid side effects in functions?
+“I don’t modify global or mutable arguments, and return new values instead.”
+123. What are pure functions?
+“They have no side effects and always return the same output for the same input.”
+124. What’s the importance of function annotations?
+“They allow me to add metadata (like types) to function parameters and return values for
+documentation or type checking.”
+125. How do you handle exceptions inside functions?
+“I use try-except blocks inside the function to catch and handle errors gracefully.”
+126. How do you time or profile a function’s performance?
+“I use the time module or cProfile to measure execution time.”
+127. How do you memoize or cache a function’s result?
+“I use a dict to store results, or functools.lru_cache decorator for built-in caching.”
+128. What is function composition?
+“I combine multiple functions so the output of one becomes the input of another.”
+129. What are built-in higher-order functions like map, filter, reduce?
+“map applies a function to items, filter selects items by a predicate, reduce aggregates values
+into one.”
+130. How does argument unpacking work?
+“I use * or ** to pass or collect multiple arguments, for example, f(*args, **kwargs).”
+131. What is partial application?
+“I use functools.partial to pre-fill some arguments of a function, returning a new function
+with fewer required arguments.”
+132. How do you define and use static and class methods?
+“Static methods don’t access class data; class methods take cls and can access class-level
+attributes.”
+133. What are positional-only and keyword-only arguments (Python 3.8+)?
+“I use / in the signature for positional-only, and * for keyword-only arguments to clarify how
+they must be passed.”
+134. What is function overloading? Is it possible in Python?
+“Python doesn’t natively support overloading; later definitions overwrite earlier ones, but I
+can mimic it using default or variable arguments.”
+135. How do you pass a function as an argument?
+“I use the function name without parentheses, like process(my_func).”
+136. What are docstrings and how are they accessed?
+“Docstrings are triple-quoted strings in functions or classes, and I access them with
+.__doc__.”
+137. What’s the purpose of the main function?
+“It serves as the program’s entry point; I wrap main logic in if __name__ == '__main__': for
+modularity.”
+138. What happens if a function has no return statement?
+“It returns None by default.”
+139. How do you make a function parameter optional?
+“I assign it a default value in the definition, like def f(x=0).”
+140. Can you have functions inside functions? Why would you do this?
+“Yes, for closures, encapsulation, or helper functions limited to the outer function’s scope.”
+141. What are callable objects?
+“Any object that implements __call__() can be called like a function; this includes functions,
+methods, and some classes.”
+142. How do you handle variable-length argument lists?
+“I use *args for any number of positional arguments and **kwargs for keyword arguments.”
+143.
+144. How do you flatten a nested list?
+“I use a loop or a list comprehension: [item for sublist in nested for item in sublist].”
+145. How do you create a dictionary from two lists?
+“I use dict(zip(list1, list2)).”
+146. How are Python variables passed—by reference or by value?
+“Python uses ‘pass by object reference’—mutable objects can be changed in a function, but
+variable reassignment doesn’t affect the caller.”
+147. What’s the difference between del and remove()?
+“del deletes by index or variable reference; remove() deletes the first occurrence of a value in
+a list.”
+148. How do you swap two variables in Python?
+“I use tuple unpacking: a, b = b, a.”
+149. What’s the purpose of the id() function?
+“id(obj) returns the unique identifier for an object in memory.”
+150. How do you check if a variable exists?
+“I use try/except NameError: or 'var' in locals() or globals().”
+151. Explain the “None” object in Python.
+“None represents the absence of a value and is commonly used for default arguments or
+return values.”
+152. How can you make a list read-only?
+“I can convert it to a tuple, which is immutable.”
+153. How do you join a list of strings into a single string?
+“I use ''.join(list_of_strings).”
+154. What are iterables and iterators?
+“An iterable can return an iterator (via iter()). An iterator is an object with a __next__()
+method that returns successive items.”
+155. How do you implement a stack or queue with built-in types?
+“I use lists with append/pop() for stacks and collections.deque for efficient queues.”
+156. What are the performance implications of lists vs. arrays in Python?
+“Lists are flexible but less memory-efficient than arrays; for numerical data, I use NumPy
+arrays for speed and efficiency.” D. Pandas (1–50)
+157. What is pandas and why is it useful?
+“Pandas is a Python library for data manipulation and analysis; I use it for handling tabular
+data efficiently, like Excel but much more powerful for automation.”
+158. How do you create a DataFrame from a CSV file?
+“I use pd.read_csv('filename.csv') to load data into a DataFrame for analysis.”
+159. What’s the difference between a Series and a DataFrame?
+“A Series is a single column of data, while a DataFrame is a 2D table with rows and columns.”
+160. How do you select rows/columns by label or position?
+“I use .loc[] for label-based access and .iloc[] for position-based access.”
+161. How do you filter rows based on a condition?
+“I use boolean indexing, for example: df[df['col'] > 0].”
+162. What are the different ways to index data in pandas?
+“I can use labels, positions, slices, boolean arrays, or callable functions with .loc[] and .iloc[].”
+163. How do you handle missing data in pandas?
+“I use df.isnull(), df.dropna(), or df.fillna() to detect, remove, or fill missing values.”
+164. How do you drop duplicate rows?
+“I use df.drop_duplicates() to remove duplicate rows based on all or specific columns.”
+165. How do you group and aggregate data?
+“I use df.groupby('col').agg({'other_col': 'sum'}) for grouping and aggregation.”
+166. How do you merge/join two DataFrames?
+“I use pd.merge(df1, df2, on='key') for SQL-like joins.”
+167. What’s the difference between merge, join, and concat?
+“merge is for database-style joins, join is for joining on index, and concat stacks dataframes
+vertically or horizontally.”
+168. How do you pivot or melt data?
+“I use pivot_table for reshaping from long to wide, and melt to go from wide to long format.”
+169. How do you handle datetime columns in pandas?
+“I use pd.to_datetime() to convert strings to datetimes, and then use .dt accessor for date
+parts.”
+170. What is multi-indexing and when would you use it?
+“Multi-indexing allows multiple levels of row/column indexes; I use it for hierarchical or
+panel data.”
+171. How do you sort a DataFrame by one or more columns?
+“I use df.sort_values(by=['col1', 'col2']).”
+172. How do you map or apply a function to a column?
+“I use .map() for elementwise mapping, .apply() for more complex or row-wise functions.”
+173. What is the use of .loc[] vs .iloc[]?
+“.loc[] selects by labels (index/column names), .iloc[] selects by integer positions.”
+174. How do you change the column order?
+“I assign a new list to df = df[['col2','col1',...]].”
+175. How do you check for and count missing values?
+“I use df.isnull().sum() to get the number of nulls per column.”
+176. How do you fill or interpolate missing values?
+“I use df.fillna(value) to fill, or df.interpolate() for interpolating between existing values.”
+177. What’s the difference between in-place and copy operations?
+“In-place changes the original object (inplace=True), while others return a modified copy,
+leaving the original unchanged.”
+178. How do you change data types of columns?
+“I use df['col'] = df['col'].astype(new_type).”
+179. How do you sample rows from a DataFrame?
+“I use df.sample(n=10) for random sampling.”
+180. How do you remove outliers in pandas?
+“I filter rows based on a condition, e.g., values within 1.5*IQR or using Z-score.”
+181. How do you append new data to an existing DataFrame?
+“I use df.append(other_df) or pd.concat([df, other_df]).”
+182. How do you create dummy/indicator variables?
+“I use pd.get_dummies(df['col']) for one-hot encoding categorical variables.”
+183. What’s the use of .query() in pandas?
+“It lets me filter DataFrames using a SQL-like string, making code more readable for complex
+conditions.”
+184. How do you export a DataFrame to CSV or Excel?
+“I use df.to_csv('file.csv') or df.to_excel('file.xlsx').”
+185. How do you aggregate with multiple functions at once?
+“I use .agg({'col1':'sum', 'col2':'mean'}) after a groupby.”
+186. How do you perform string operations in pandas?
+“I use the .str accessor for vectorized string ops, like df['col'].str.lower().”
+187. How do you reshape data (wide <-> long)?
+“I use pivot, pivot_table, and melt to reshape between wide and long.”
+188. How do you shift or lag data for time series?
+“I use df.shift(periods=1) to move data down by one row, introducing lag.”
+189. How do you check memory usage of a DataFrame?
+“I use df.info(memory_usage='deep') or df.memory_usage(deep=True).”
+190. How do you rename columns or indexes?
+“I use df.rename(columns={'old':'new'}).”
+191. What is chaining and why can it be dangerous?
+“Chaining (e.g., df[df.x > 0]['y']) can cause SettingWithCopyWarning and may not modify the
+original data; I avoid it by using .loc[].”
+192. How do you filter data based on multiple conditions?
+“I use bitwise operators, like df[(df['a']>0) & (df['b']<10)].”
+193. What is the use of assign()?
+“assign() lets me add new columns to a DataFrame in a chainable way, for cleaner code.”
+194. How do you handle categorical variables in pandas?
+“I convert them to category dtype or use get_dummies() for encoding.”
+195. How do you set or reset the index?
+“I use set_index('col') to set, and reset_index() to move index back to a column.”
+196. How do you iterate over rows efficiently?
+“I avoid row-wise iteration when possible, but use df.itertuples() if I must.”
+197. What is the use of .agg()?
+“.agg() lets me apply multiple aggregation functions to columns or groups.”
+198. How do you merge on multiple keys?
+“I provide a list of keys to the on argument: pd.merge(df1, df2, on=['k1', 'k2']).”
+199. How do you get top-N rows by group?
+“I use groupby().head(N) after sorting.”
+200. What’s the role of window functions in pandas?
+“I use rolling, expanding, or groupby().rank() for running totals, moving averages, and more.”
+201. How do you check for duplicates across columns?
+“I use df.duplicated(subset=['col1', 'col2']).”
+202. How do you use custom aggregation functions?
+“I pass a function or lambda to .agg().”
+203. How do you detect and replace outliers?
+“I use statistical methods (IQR, Z-score) to filter or set outliers to a boundary value.”
+204. How do you compare two DataFrames for equality?
+“I use df1.equals(df2) for a full equality check.”
+205. How do you optimize pandas for large data?
+“I use categorical types, select only needed columns, use chunked reading, and avoid
+unnecessary copying.”
+206. What is chained assignment, and why should you avoid it?
+“It’s assigning a value via chained selection (e.g., df[df.x>0]['y']=1); it can silently fail or not
+modify the original DataFrame.”
+207.
+208. E. Data Visualization (matplotlib/seaborn) (1–50)
+209. How do you plot a line graph in matplotlib?
+“I use plt.plot(x, y) and plt.show() to display a line graph.”
+210. What are the differences between matplotlib and seaborn?
+“Matplotlib is the foundation for plotting; seaborn is built on top, providing higher-level,
+prettier statistical graphics with less code.”
+211. How do you add titles and labels to plots?
+“I use plt.title(), plt.xlabel(), and plt.ylabel().”
+212. How do you plot multiple series on the same graph?
+“I call plt.plot() multiple times before plt.show(), or pass multiple sets of data.”
+213. What is a scatter plot and when do you use it?
+“A scatter plot shows relationships between two numeric variables; I use it to detect patterns
+or outliers.”
+214. How do you change figure size and resolution?
+“I set it in plt.figure(figsize=(width, height), dpi=value).”
+215. How do you set axis limits?
+“I use plt.xlim() and plt.ylim().”
+216. What are subplots and how do you create them?
+“Subplots let me show multiple charts in one figure; I use plt.subplot() or plt.subplots().”
+217. How do you add legends to your charts?
+“I use plt.legend() after labeling data series.”
+218. How do you style plots (colors, markers, line styles)?
+“I pass color, marker, and linestyle arguments to plot functions, like plt.plot(x, y, color='r',
+marker='o', linestyle='--').”
+219. How do you save a plot to a file?
+“I use plt.savefig('filename.png').”
+220. How do you plot a histogram?
+“I use plt.hist(data) or sns.histplot(data) for distributions.”
+221. What are boxplots and when should you use them?
+“Boxplots show distributions and outliers for numeric data; I use them to compare spread
+across groups.”
+222. How do you plot a bar chart? A horizontal bar chart?
+“I use plt.bar(x, y) for vertical and plt.barh(x, y) for horizontal bar charts.”
+223. How do you annotate points on a chart?
+“I use plt.annotate() to add text at specific data points.”
+224. How do you plot heatmaps in seaborn?
+“I use sns.heatmap(data) for displaying correlation matrices or pivot tables.”
+225. What’s the difference between plt.show() and plt.savefig()?
+“plt.show() displays the plot; plt.savefig() saves it to a file for sharing or documentation.”
+226. How do you rotate x-axis labels?
+“I use plt.xticks(rotation=45) or set rotation in seaborn’s plotting functions.”
+227. How do you plot a pie chart?
+“I use plt.pie(data).”
+228. What is a pairplot in seaborn?
+“A pairplot displays scatterplots for every pair of variables and histograms on the diagonal;
+useful for EDA.”
+229. How do you adjust font sizes and styles?
+“I set font size in label/title functions, or use plt.rcParams for global defaults.”
+230. How do you set color palettes in seaborn?
+“I use sns.set_palette('palette_name') before plotting.”
+231. How do you create a stacked bar chart?
+“I stack bars by summing lower values before plotting the next series, or use plt.bar(...,
+bottom=...).”
+232. How do you add gridlines to a plot?
+“I call plt.grid(True).”
+233. How do you plot error bars?
+“I use plt.errorbar(x, y, yerr=errors).”
+234. What’s the use of log scale in plotting?
+“I use log scale (plt.xscale('log')) for skewed data or when showing exponential growth.”
+235. How do you plot a time series?
+“I use plt.plot(date_series, values) and format the x-axis for dates.”
+236. How do you overlay a regression line?
+“I use sns.regplot() or fit a line and plot it with plt.plot().”
+237. How do you remove chart spines?
+“In seaborn, I use sns.despine().”
+238. How do you plot grouped bar charts?
+“I adjust bar positions using width and offset for each group.”
+239. How do you make plots interactive?
+“I use %matplotlib notebook in Jupyter or libraries like Plotly for advanced interactivity.”
+240. How do you plot categorical vs numerical data?
+“I use bar charts, boxplots, or violin plots to compare categories.”
+241. How do you change background color?
+“I use plt.gca().set_facecolor() or set facecolor when creating the figure.”
+242. How do you plot distribution of a variable?
+“I use sns.distplot(), sns.histplot(), or plt.hist().”
+243. What’s the difference between countplot and barplot?
+“countplot counts the number of observations in each category; barplot displays summary
+stats (like mean) for each category.”
+244. How do you customize tick marks and intervals?
+“I use plt.xticks() and plt.yticks() to set ticks and intervals.”
+245. How do you create violin plots?
+“I use sns.violinplot(data=...) for distribution and density in one plot.”
+246. What’s the best chart for showing correlation?
+“Scatterplots, heatmaps, or pairplots show correlation best.”
+247. How do you add reference lines?
+“I use plt.axhline() or plt.axvline() to add horizontal or vertical reference lines.”
+248. How do you display data values on bars?
+“I loop through the bars and use plt.text() to annotate heights.”
+249. How do you plot two y-axes in matplotlib?
+“I use ax.twinx() to create a second y-axis.”
+250. How do you export plots as images in different formats?
+“I use plt.savefig('plot.svg'), changing the extension for the desired format.”
+251. How do you make a plot visually accessible?
+“I use high-contrast colors, large fonts, and descriptive labels for clarity.”
+252. How do you plot missing data?
+“I visualize missing data patterns with heatmaps or bar charts showing null counts.”
+253. How do you adjust spacing between subplots?
+“I use plt.tight_layout() or adjust spacing with plt.subplots_adjust().”
+254. How do you plot proportions or percentages?
+“I calculate percentages first, then plot with bar, pie, or stacked charts.”
+255. How do you plot a confusion matrix?
+“I use sns.heatmap() on the confusion matrix for model evaluation.”
+256. How do you update plots in a loop (animation)?
+“I use FuncAnimation in matplotlib or update plot data in a loop for animation.”
+257. What is a swarmplot in seaborn?
+“A swarmplot shows all data points for categories, avoiding overlap—great for small
+datasets.”
+258. How do you avoid overlapping labels and legends?
+“I rotate labels, use tight layouts, and adjust legend location or use bounding boxes.”
+259.
+260. F. Functions & Regex (1–50)
+261. What is the difference between a regular function and a lambda?
+“A regular function is defined with def and can have multiple statements; a lambda is
+anonymous, inline, and usually for simple expressions.”
+262. When would you use a lambda function?
+“For short, simple operations like sorting or mapping where I don’t need a full named
+function.”
+263. How do you pass functions as arguments?
+“I pass the function name without parentheses, e.g., apply(func).”
+264. What are closures and how are they used?
+“A closure is a nested function that captures variables from its enclosing scope; I use it for
+maintaining state.”
+265. What is function documentation and why is it important?
+“It’s a docstring that describes what the function does, its parameters, and return value. It
+helps other developers and my future self understand code.”
+266. How do you handle exceptions in functions?
+“I wrap risky code in try-except blocks and handle or log errors gracefully.”
+267. What’s the difference between re.match() and re.search()?
+“re.match() checks only at the start of a string, while re.search() scans the whole string for a
+match.”
+268. How do you use re.findall()?
+“re.findall() returns all non-overlapping matches of a pattern in a string as a list.”
+269. What are raw strings in regex?
+“Raw strings (e.g., r'pattern') prevent Python from interpreting backslashes as escapes,
+making regex patterns clearer.”
+270. How do you replace text using regex?
+“I use re.sub(pattern, replacement, string).”
+271. What is greedy vs. non-greedy matching?
+“Greedy matches as much as possible; non-greedy (with ?) matches as little as needed.”
+272. How do you use groups and capture groups in regex?
+“I put parentheses in the pattern, and then use .group() or .groups() on the match object to
+extract them.”
+273. How can regex be used for data validation?
+“I use regex to check if strings match patterns, like emails or phone numbers.”
+274. How do you compile a regex pattern? Why?
+“I use re.compile() for patterns used repeatedly, which speeds up matching.”
+275. What are named groups in regex?
+“I use (?P<name>pattern) for named groups, so I can access matches by name.”
+276. How do you escape special characters?
+“I use a backslash or re.escape() to treat characters as literals.”
+277. What is the purpose of anchors (^, $) in regex?
+“^ matches the start, $ matches the end of a line or string—useful for precise matching.”
+278. How do you use regex for extracting emails/URLs?
+“I write a pattern for emails or URLs and use re.findall() or re.search() to extract them from
+text.”
+279. How do you split a string with multiple delimiters?
+“I use re.split(r'[;,\s]', string) for splitting on any delimiter in the brackets.”
+280. What are word boundaries in regex?
+“\b matches the boundary between word and non-word characters, helping me extract
+whole words.”
+281. How do you check if a string matches a regex pattern?
+“I use re.match() or re.fullmatch() and check if the result is not None.”
+282. What are lookahead and lookbehind assertions?
+“They let me match patterns based on what comes before or after, without including it in the
+result.”
+283. How do you make regex case-insensitive?
+“I add the re.IGNORECASE flag when compiling or searching.”
+284. How can you use regex to clean data?
+“I use regex to find and replace unwanted patterns or characters in data.”
+285. How does regex handle Unicode or special characters?
+“Python regex supports Unicode by default in Python 3; I can use re.UNICODE for clarity.”
+286. How do you match optional characters in regex?
+“I use the ? quantifier to match zero or one occurrence.”
+287. What’s the use of quantifiers (*, +, ?, {n})?
+“They specify how many times a pattern should match: * zero or more, + one or more, ? zero
+or one, {n} exact.”
+288. How do you use regex in pandas?
+“I use df['col'].str.contains(), .extract(), or .replace() for regex-based operations on Series.”
+289. How do you remove HTML tags using regex?
+“I use re.sub(r'<.*?>', '', text) to strip tags.”
+290. How do you extract numbers from a string?
+“I use re.findall(r'\d+', string).”
+291. What are some common pitfalls with regex in Python?
+“Using greedy quantifiers by mistake, not escaping special characters, or forgetting raw
+strings.”
+292. How do you debug complex regex expressions?
+“I break them into smaller parts, test with sample data, and use online regex testers.”
+293. How do you limit the number of matches in regex?
+“I use quantifiers with limits, like {2,5}, or process only the first N results in Python.”
+294. How do you anchor a regex to start/end of line?
+“Use ^ at the start, $ at the end of the pattern.”
+295. How do you match multiline strings with regex?
+“I use the re.MULTILINE flag and adjust anchors for each line.”
+296. What is the difference between re.sub() and re.subn()?
+“re.sub() returns the new string; re.subn() returns a tuple with the new string and the
+number of replacements.”
+297. How do you use regex to find duplicate words?
+“I use a pattern like r'\b(\w+)\s+\1\b' to match repeated words.”
+298. How do you validate phone numbers with regex?
+“I write a pattern for the country’s phone format and use re.fullmatch().”
+299. How do you comment in a regex pattern?
+“I use the re.VERBOSE flag and add comments with # inside the pattern.”
+300. How do you use regex with flags?
+“I pass flags as the second argument to re.compile() or functions, like re.IGNORECASE.”
+301. What’s the performance impact of using regex?
+“Complex patterns can be slow on large data; I precompile patterns and keep them simple.”
+302. How do you precompile regex for repeated use?
+“I use pattern = re.compile('...') and then call pattern.search().”
+303. When should you avoid using regex?
+“For simple splitting or fixed patterns, string methods are faster and clearer.”
+304. What are backreferences in regex?
+“They let me refer to a previously matched group within the pattern, using \1, \2, etc.”
+305. How do you find overlapping matches in regex?
+“I use lookahead assertions for overlapping patterns, like (?=(pattern)).”
+306. How do you extract all capitalized words from a string?
+“I use re.findall(r'\b[A-Z][a-z]*\b', string).”
+307. How do you use regex to tokenize text?
+“I split text into words with re.findall(r'\w+', text).”
+308. How do you parse a date string with regex?
+“I write a pattern matching the date format and extract groups for year, month, and day.”
+309. How do you chain multiple regex operations?
+“I run one regex function after another, or combine patterns using alternation (|).”
+310. How do you use regex for conditional matching?
+“I use (?ifthen|else) in advanced patterns, but often use Python logic for clarity.”
+100 Mixed Topic Python Interview Questions & Answers
+311. Explain the difference between a list, tuple, and set.
+“A list is mutable and ordered, a tuple is immutable and ordered, and a set is mutable
+but unordered with unique elements.”
+312. When would you use a dict vs. a list?
+“I use a dict for key-value pairs and fast lookups, and a list when I only need an
+ordered sequence of items.”
+313. How does Python handle variable scope inside functions?
+“Variables defined in a function are local; if I want to modify an outside variable, I
+use global or nonlocal.”
+314. What is broadcasting in NumPy and why is it important?
+“Broadcasting lets me operate on arrays of different shapes efficiently, which is
+crucial for vectorized computations.”
+315. How do you filter rows in pandas based on multiple conditions?
+“I use bitwise operators, like df[(df.a > 0) & (df.b < 5)].”
+316. What’s the difference between .loc and .iloc in pandas?
+“.loc[] selects by labels (names), .iloc[] selects by integer position.”
+317. How do you create a scatter plot in matplotlib?
+“I use plt.scatter(x, y) and plt.show().”
+318. What are the pros and cons of using comprehensions?
+“They’re concise and fast for simple operations, but can hurt readability if overused or
+too complex.”
+319. How do you join two pandas DataFrames?
+“I use pd.merge(df1, df2, on='key') for joins based on a key.”
+320. When would you use a lambda over a regular function?
+“For small, throwaway functions, like sorting or mapping.”
+321. What is a decorator and how is it used?
+“A decorator wraps a function to add extra behavior; I use @decorator above the
+function.”
+322. How do you avoid chained assignment issues in pandas?
+“I use .loc[] for assignment instead of chaining filters.”
+323. What is the difference between append and extend in lists?
+“append adds a single element, extend adds each item from another iterable.”
+324. How do you handle missing values in NumPy arrays?
+“I use np.isnan() to find them and np.nan_to_num() to replace them.”
+325. What is the purpose of the id() function?
+“It returns the memory address of an object.”
+326. How do you create a pivot table in pandas?
+“I use df.pivot_table(values='val', index='row', columns='col',
+aggfunc='sum').”
+327. What’s the use of regex in data cleaning?
+“Regex helps me extract, validate, or remove patterns like emails, numbers, or
+unwanted characters.”
+328. How do you make a plot visually accessible?
+“I use readable fonts, colorblind-friendly palettes, and clear labels.”
+329. What’s the importance of exception handling in Python?
+“It prevents crashes and allows me to gracefully manage errors and log them for
+debugging.”
+330. How do you optimize pandas code for large datasets?
+“I select only needed columns, use categorical types, and avoid loops in favor of
+vectorized operations.”
+331. What is a shallow vs deep copy in Python?
+“A shallow copy shares nested objects, a deep copy duplicates everything
+recursively.”
+332. How do you use groupby in pandas?
+“I group by a column and then aggregate, like df.groupby('category').sum().”
+333. What is vectorization and why is it important?
+“Vectorization means applying operations to whole arrays without loops, making
+code much faster.”
+334. How do you plot a heatmap using seaborn?
+“I use sns.heatmap(data) to visualize correlations or missing values.”
+335. What is a closure in Python?
+“A closure is a function defined inside another that remembers variables from its
+enclosing scope.”
+336. How do you profile code performance in Python?
+“I use the time module for timing, or cProfile for more detailed profiling.”
+337. When would you use object-oriented programming?
+“When modeling entities with shared attributes/behavior, or for reusable,
+maintainable code.”
+338. How do you document a function in Python?
+“I use a docstring under the function definition, describing purpose, parameters, and
+return values.”
+339. What is the purpose of the with statement?
+“It manages resources, like files, ensuring they’re closed automatically even if an
+error occurs.”
+340. How do you check if two arrays are equal in NumPy?
+“I use np.array_equal(arr1, arr2).”
+341. What are the implications of mutable default arguments?
+“They persist between calls, which can lead to unexpected behavior; I avoid them
+unless intentional.”
+342. How do you merge two dictionaries in Python 3.9+?
+“I use dict1 | dict2 to merge.”
+343. What’s the difference between pop and remove for lists?
+“pop removes by index and returns the item; remove deletes the first matching value.”
+344. How do you handle datetime data in pandas?
+“I convert to datetime with pd.to_datetime() and use .dt accessor for
+manipulation.”
+345. What is a masked array in NumPy?
+“An array where certain elements are marked invalid or ignored in calculations.”
+346. What’s the use of assert statements in Python?
+“They help catch bugs by testing if a condition is true during development.”
+347. How do you fill missing values with the median in pandas?
+“I use df['col'].fillna(df['col'].median()).”
+348. What is a universal function (ufunc) in NumPy?
+“A fast, elementwise function, like np.add or np.sqrt, that operates on arrays.”
+349. How do you create dummy variables in pandas?
+“I use pd.get_dummies(df['category']) for one-hot encoding.”
+350. What is the purpose of axes in matplotlib?
+“They represent the coordinate system for plotting data, letting me control what’s
+shown.”
+351. How do you validate a phone number using regex?
+“I write a regex pattern for the phone format and use re.fullmatch().”
+352. What are positional-only arguments in Python?
+“Arguments that must be passed by position, defined using / in the function signature
+(Python 3.8+).”
+353. How do you make code more readable and maintainable?
+“I use clear variable names, comments, docstrings, modular functions, and consistent
+formatting.”
+354. What’s the difference between shallow and deep copy in NumPy?
+“A shallow copy is a view (shares memory); a deep copy is a new independent
+object.”
+355. When would you use a set for data processing?
+“When I need to remove duplicates or test membership quickly.”
+356. How do you find and remove outliers in pandas?
+“I use statistical thresholds (like Z-score or IQR) and filter or set outlier values as
+needed.”
+357. What is the role of the requests library in automation?
+“It lets me automate API calls for data extraction, integration, and workflow
+automation.”
+358. How do you check for duplicates in a pandas DataFrame?
+“I use df.duplicated() to flag, and df.drop_duplicates() to remove them.”
+359. What is method overloading? Is it possible in Python?
+“Python doesn’t support traditional overloading; I use default/variable arguments to
+simulate it.”
+360. How do you convert a DataFrame to a dictionary?
+“I use df.to_dict() and specify orientation, like 'records' or 'dict'.”
+361. What are subplots in matplotlib?
+“Subplots are multiple plots in one figure; I create them with plt.subplots().”
+362. How do you time a code block for performance?
+“I use time.time() before and after, or %timeit in Jupyter.”
+363. What are named groups in regex and why use them?
+“They let me label capture groups for easier, more readable extraction from matches.”
+364. How do you aggregate data by month in pandas?
+“I convert dates to months and use groupby(df['date'].dt.to_period('M')).”
+365. What’s the role of init in Python classes?
+“It’s the constructor; it initializes object attributes when an instance is created.”
+366. How do you check for nulls in NumPy and pandas?
+“In NumPy, np.isnan(); in pandas, df.isnull().”
+367. What is a pairplot and when would you use it?
+“It’s a grid of scatterplots for each pair of variables; I use it for quick EDA.”
+368. How do you use apply() in pandas?
+“I apply a function to each row or column: df['col'].apply(func).”
+369. What is a generator and why use it?
+“A generator yields items one at a time; it’s memory-efficient for large sequences.”
+370. How do you set color palettes in seaborn?
+“I use sns.set_palette('palette_name') before plotting.”
+371. What is the purpose of global and nonlocal keywords?
+“They let me modify variables outside the current function’s scope.”
+372. How do you use docstrings for documentation?
+“I write triple-quoted strings under functions/classes for built-in help and IDE
+tooltips.”
+373. How do you flatten a nested list or array?
+“With a list comprehension ([item for sublist in lst for item in sublist])
+or arr.flatten() in NumPy.”
+374. How do you split a string by multiple delimiters?
+“With re.split(r'[;,\s]', string).”
+375. What is a virtual environment and why use it?
+“It’s an isolated environment for dependencies, preventing version conflicts between
+projects.”
+376. How do you drop columns in pandas?
+“I use df.drop('col', axis=1).”
+377. What are ufuncs and how do they differ from regular functions?
+“Ufuncs are vectorized, working elementwise on arrays, unlike Python loops.”
+378. How do you save and load data in Python?
+“I use open() for text/binary, or pandas for tabular data, and pickle or JSON for
+objects.”
+379. How do you annotate a chart in matplotlib?
+“I use plt.annotate('text', xy=(x, y)).”
+380. What are chained comparisons in Python?
+“I can write 1 < x < 10 for clean, readable multi-condition checks.”
+381. How do you convert categorical variables in pandas?
+“I use .astype('category') or get_dummies() for encoding.”
+382. What is recursion and what are its risks?
+“Recursion is a function calling itself; too many calls can cause a stack overflow.”
+383. How do you merge/join datasets on multiple columns?
+“I pass a list of columns to on in pd.merge(), like on=['a', 'b'].”
+384. What’s the use of map and filter in Python?
+“map applies a function to items; filter selects items passing a condition.”
+385. What is the use of str and repr?
+“__str__ defines the string version for users; __repr__ for debugging and
+developers.”
+386. How do you create a multi-index in pandas?
+“I use set_index([col1, col2]) or during groupby().”
+387. What are word boundaries in regex?
+“\b marks the start/end of a word, used for precise pattern matching.”
+388. How do you reshape data in pandas?
+“I use pivot, melt, stack, or unstack for reshaping.”
+389. When would you use axis=1 in pandas operations?
+“When I want to operate across columns, like row sums or dropping columns.”
+390. How do you compare two DataFrames for differences?
+“I use df1.compare(df2) or subtract them directly.”
+391. What’s the role of assertions in data validation?
+“They let me catch unexpected or invalid data early in the process.”
+392. How do you export plots as images in matplotlib?
+“I use plt.savefig('file.png').”
+393. What is the difference between yield and return?
+“yield turns a function into a generator, returning values one by one; return exits a
+function and provides a value.”
+394. How do you interpolate missing data in pandas?
+“I use df.interpolate() to fill gaps based on adjacent values.”
+395. What is memoization and how do you implement it?
+“It’s caching function results to speed up repeated calls; I use a dict or
+functools.lru_cache.”
+396. How do you handle timezones in pandas?
+“I use df['date'].dt.tz_localize() and tz_convert().”
+397. What is a hashable type in Python?
+“A type whose value doesn’t change, so it can be used as a dict key or set element
+(e.g., str, int, tuple).”
+398. How do you comment a regex for readability?
+“I use the re.VERBOSE flag to add inline comments.”
+399. What is a callable object in Python?
+“Any object with a __call__() method, like functions or classes acting like
+functions.”
+400. How do you safely handle files in Python?
+“I use with open('file') as f: to ensure files are closed automatically.”
+401. What is the purpose of main in Python scripts?
+“It allows the file to act as both a reusable module and an executable script.”
+402. How do you avoid SettingWithCopyWarning in pandas?
+“I use .loc[] for assignment instead of chained indexing.”
+403. What are the advantages of using seaborn over matplotlib?
+“Seaborn creates more attractive, statistical plots with less code and has great
+defaults.”
+404. How do you compare performance between two approaches?
+“I use timing tools like %timeit in Jupyter or the time module.”
+405. What is an abstract class and when to use it?
+“An abstract class can’t be instantiated directly and defines required methods for
+subclasses.”
+406. How do you handle multi-index columns in pandas?
+“I use tuple column names, and access them with multi-level indexing methods.”
+407. What’s the use of plt.tight_layout()?
+“It automatically adjusts spacing between subplots for readability.”
+408. How do you parse dates when loading CSVs in pandas?
+“I use pd.read_csv(..., parse_dates=['col']).”
+409. How do you validate user input in a function?
+“I check types/values with isinstance(), conditions, or raise exceptions for bad
+input.”
+410. What are the trade-offs between readability and performance in Python
+code?
+“Readable code is easier to maintain and debug, but sometimes I optimize for
+performance in bottleneck areas—ideally, I balance both.”
