@@ -14,7 +14,7 @@ app.secret_key = 'supersecretkey'
 
 HTML = '''
 <!doctype html>
-<title>Q&A Search App</title>
+<title>Q&A TXT Search App</title>
 <h2>Upload Interview Q&A TXT files and Search</h2>
 <form method=post enctype=multipart/form-data action="/upload">
   <input type=file name=file multiple required>
@@ -69,13 +69,13 @@ def extract_numbered_qa(txt_paths):
         try:
             with open(os.path.join(UPLOAD_FOLDER, txt_path), encoding="utf-8") as f:
                 content = f.read()
-            # Use regex to find all "number. Question" and their answers
-            pattern = r'(?m)(\d+\.\s+.*?)(?=(?:\n\d+\. )|\Z)'
-            matches = list(re.finditer(pattern, content, flags=re.DOTALL))
-            for match in matches:
-                qa_block = match.group(1).strip()
-                # Split at the first line break: first line is Q, rest is A
-                lines = qa_block.split('\n', 1)
+            # Match all lines starting with "number. " as questions
+            pattern = r'(?m)^\s*(\d+\..+?)(?=\n\s*\d+\.|\Z)'
+            matches = re.finditer(pattern, content, re.DOTALL)
+            for m in matches:
+                block = m.group(1).strip()
+                # Split the block: first line is question, rest is answer
+                lines = block.split('\n', 1)
                 question = lines[0].strip()
                 answer = lines[1].strip() if len(lines) > 1 else ""
                 qa_data.append({"filename": txt_path, "q": question, "a": answer})
