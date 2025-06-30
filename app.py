@@ -14,8 +14,8 @@ app.secret_key = 'supersecretkey'
 
 HTML = '''
 <!doctype html>
-<title>TXT Interview Q&A Search</title>
-<h2>Upload TXT files (numbered Q&A) and Search</h2>
+<title>Q&A Search App</title>
+<h2>Upload Interview Q&A TXT files and Search</h2>
 <form method=post enctype=multipart/form-data action="/upload">
   <input type=file name=file multiple required>
   <input type=submit value=Upload>
@@ -38,7 +38,7 @@ HTML = '''
     {% endfor %}
   </ul>
   <form method=get action="/">
-    <input type=text name=query placeholder="Type your search..." required>
+    <input type=text name=query placeholder="Type your search..." required style="width:300px;">
     <input type=submit value=Search>
   </form>
 {% endif %}
@@ -50,7 +50,7 @@ HTML = '''
     <li>
       <b>{{ filename }}</b>:<br>
       <b>Q:</b> {{ question|safe }}<br>
-      <b>A:</b> {{ answer|safe }}<br>
+      <b>A:</b> {{ answer|safe }}<br><br>
     </li>
   {% endfor %}
   </ul>
@@ -69,19 +69,16 @@ def extract_numbered_qa(txt_paths):
         try:
             with open(os.path.join(UPLOAD_FOLDER, txt_path), encoding="utf-8") as f:
                 content = f.read()
-
-            # Split into sections at lines like: "1. question", "2. next question", etc.
-            pattern = r'(?m)^\d+\.\s+(.*)'
-            q_lines = list(re.finditer(pattern, content))
-            for idx, q_match in enumerate(q_lines):
-                q_start = q_match.end()
-                q_text = q_match.group(1).strip()
-                # Answer starts at the end of the question line, ends at the start of next question or EOF
-                if idx + 1 < len(q_lines):
-                    a_text = content[q_start:q_lines[idx+1].start()].strip().replace('\n', ' ')
-                else:
-                    a_text = content[q_start:].strip().replace('\n', ' ')
-                qa_data.append({"filename": txt_path, "q": q_text, "a": a_text})
+            # Use regex to find all "number. Question" and their answers
+            pattern = r'(?m)(\d+\.\s+.*?)(?=(?:\n\d+\. )|\Z)'
+            matches = list(re.finditer(pattern, content, flags=re.DOTALL))
+            for match in matches:
+                qa_block = match.group(1).strip()
+                # Split at the first line break: first line is Q, rest is A
+                lines = qa_block.split('\n', 1)
+                question = lines[0].strip()
+                answer = lines[1].strip() if len(lines) > 1 else ""
+                qa_data.append({"filename": txt_path, "q": question, "a": answer})
         except Exception as e:
             print(f"Failed to extract from {txt_path}: {e}")
     return qa_data
