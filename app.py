@@ -10,12 +10,12 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.secret_key = 'supersecretkey'  # Needed for flash messages
+app.secret_key = 'supersecretkey'
 
 HTML = '''
 <!doctype html>
-<title>TXT File Search App</title>
-<h2>Upload TXT files and Search Their Content</h2>
+<title>Q&A TXT Search App</title>
+<h2>Upload TXT files (with Q&A) and Search Their Content</h2>
 <form method=post enctype=multipart/form-data action="/upload">
   <input type=file name=file multiple required>
   <input type=submit value=Upload>
@@ -46,9 +46,12 @@ HTML = '''
 {% if results is not none %}
   <h3>Results for: "{{ request.args.get('query', '') }}"</h3>
   <ul>
-  {% for filename, snippet in results %}
+  {% for filename, q, a in results %}
     <li>
-      <b>{{ filename }}</b>: ... {{ snippet|safe }} ...
+      <b>{{ filename }}</b>:<br>
+      <b>Q:</b> {{ q|safe }}<br>
+      <b>A:</b> {{ a|safe }}
+      <br>
     </li>
   {% endfor %}
   </ul>
@@ -61,27 +64,28 @@ HTML = '''
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def extract_text_from_txts(txt_paths):
-    text_data = []
+def extract_qa_pairs(txt_paths):
+    qa_data = []
     for txt_path in txt_paths:
         try:
             with open(os.path.join(UPLOAD_FOLDER, txt_path), encoding="utf-8") as f:
-                full_text = f.read()
-            text_data.append({"filename": txt_path, "content": full_text})
+                content = f.read()
+            # Find all Q&A pairs (assuming blank lines or consistent structure)
+            pairs = re.findall(r"Q:(.*?)[\r\n]+A:(.*?)(?:[\r\n]+|$)", content, re.DOTALL | re.IGNORECASE)
+            for q, a in pairs:
+                qa_data.append({"filename": txt_path, "q": q.strip(), "a": a.strip()})
         except Exception as e:
             print(f"Failed to extract from {txt_path}: {e}")
-    return text_data
+    return qa_data
 
-def search_txts(text_data, query):
+def search_qa(qa_data, query):
     results = []
     pattern = re.compile(re.escape(query), re.IGNORECASE)
-    for doc in text_data:
-        for match in pattern.finditer(doc["content"]):
-            start = max(0, match.start() - 80)
-            end = match.end() + 80
-            snippet = doc["content"][start:end].replace('\n', ' ')
-            snippet = re.sub(pattern, r"<mark>\g<0></mark>", snippet)
-            results.append((doc["filename"], snippet))
+    for qa in qa_data:
+        if pattern.search(qa["q"]) or pattern.search(qa["a"]):
+            q_highlight = pattern.sub(r"<mark>\g<0></mark>", qa["q"])
+            a_highlight = pattern.sub(r"<mark>\g<0></mark>", qa["a"])
+            results.append((qa["filename"], q_highlight, a_highlight))
     return results
 
 @app.route("/", methods=["GET"])
@@ -90,8 +94,8 @@ def index():
     results = None
     query = request.args.get('query', '').strip()
     if query and files:
-        text_data = extract_text_from_txts(files)
-        results = search_txts(text_data, query)
+        qa_data = extract_qa_pairs(files)
+        results = search_qa(qa_data, query)
     return render_template_string(HTML, files=files, results=results)
 
 @app.route("/upload", methods=["POST"])
