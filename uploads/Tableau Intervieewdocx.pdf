@@ -1,0 +1,778 @@
+A. Tableau Basics, Data Sources & Architecture
+1. What is Tableau and what are its main uses?
+“Tableau is a powerful business intelligence tool for data visualization and analytics. I use it
+to connect to different data sources, analyze data visually, and build interactive dashboards
+for business users.”
+2. Describe Tableau’s architecture.
+“Tableau has a client-server architecture: Tableau Desktop for building, Tableau Server and
+Tableau Online for sharing, and Tableau Public for publishing open dashboards. Tableau Prep
+is for data prep. Each component plays a role in the analytics lifecycle.”
+3. What’s the difference between Tableau Desktop, Server, and Public?
+“Tableau Desktop is for developing visualizations. Tableau Server is for sharing and
+collaboration securely within an organization. Tableau Public is free but for public content
+only—anyone can access what you upload.”
+4. What are the main file types in Tableau?
+“TWX/TWB (workbook), TDS (data source), TDE/HYPER (extract), TDSX (packaged data
+source), and TWBX (packaged workbook).”
+5. What are dimensions and measures?
+“Dimensions are qualitative fields (like customer name, region), while measures are numeric
+fields (like sales, profit) used for aggregation.”
+6. What is a data source in Tableau?
+“It’s any data connection—file or server—that Tableau reads to power its analyses.”
+7. What are live vs. extract connections?
+“Live means Tableau queries the data source in real time. Extract is a static snapshot (TDE or
+Hyper), enabling faster analytics and offline access.”
+8. What is a Tableau extract (.hyper)? When would you use it?
+“It’s a compressed, high-performance file that speeds up analytics and supports offline
+access. I use extracts for large or slow data sources.”
+9. What is the Data Interpreter?
+“A feature to help clean and format messy Excel or CSV data before analysis.”
+10. How does Tableau handle different data types?
+“Automatically detects types—string, number, date, geographic, boolean—but I can change
+them in the data pane if needed.”
+11. How do you connect Tableau to a database?
+“From the Data tab, I select the database type, enter credentials, and connect. Tableau
+supports almost all major relational and cloud databases.”
+12. What are joins and blends in Tableau?
+“Joins are row-level combinations within a single data connection; blends combine results
+across two different data sources at an aggregate level.”
+13. What is data blending and when is it needed?
+“Blending is needed when data comes from different sources (e.g., SQL and Excel) and can’t
+be joined natively—like combining sales from Oracle and targets from a spreadsheet.”
+14. What are the limitations of data blending?
+“It’s less performant, works at aggregate level, and left-joins only. Calculated fields across
+sources are limited.”
+15. What is a primary vs. secondary data source?
+“Primary drives the main view, secondary is blended in. Blue check in data pane marks the
+primary.”
+16. What is the difference between joining and blending data?
+“Joins happen in the database, row-level, with a single data connection. Blending is in
+Tableau, post-aggregate, for combining different sources.”
+17. What are hierarchies in Tableau?
+“Hierarchies let me group related dimensions (like Country > State > City) so users can drill
+down in dashboards.”
+18. What is a relationship in Tableau (2020.2+)?
+“It’s a flexible, logical link between tables that preserves their individual detail until
+necessary—unlike physical joins, which merge up front.”
+19. How does Tableau handle metadata?
+“All field types, aliases, calculations, and relationships are stored as metadata in the
+workbook or data source file.”
+20. What is a calculated field?
+“It’s a new field I define using formulas—enables custom metrics, logic, and more flexible
+analytics.”
+21. Where can calculated fields be created?
+“In the data pane (for the entire workbook), in the view, or on the shelf itself for quick
+calculations.”
+22. What’s a context filter and why use it?
+“A context filter narrows the data set before other filters—improves performance and
+enables dependent filters.”
+23. What are extract filters?
+“They limit what data is brought into an extract, reducing extract size and improving
+performance.”
+24. What is a wildcard match in filters?
+“A text filter that supports pattern-matching, like “%Inc%” to match all companies with “Inc”
+in the name.”
+25. What is data densification?
+“Filling in missing values in data visualizations, so trends and lines aren’t broken even when
+data is sparse.”
+26. What are the differences between continuous and discrete fields?
+“Continuous (green pills) are ranges—used for axes, allow trends. Discrete (blue) are
+categories—used for labels, headers.”
+27. What’s a Tableau workbook vs. worksheet?
+“A workbook is the whole Tableau file; a worksheet is a single chart or visualization within it.”
+28. What is a dashboard in Tableau?
+“A dashboard is a collection of worksheets and objects, providing a single, interactive
+analytical view.”
+29. What is a story in Tableau?
+“A story is a sequence of dashboards and worksheets, letting me walk users through a
+narrative with data.”
+30. What is a parameter? How is it used?
+“A parameter is a dynamic value (number, date, or string) users can change to drive filters,
+calculations, or reference lines.”
+31. What is a data pane?
+“It’s the sidebar listing all data fields, dimensions, and measures available for building
+visualizations.”
+32. How does Tableau handle null values?
+“Nulls are shown as blanks, ‘Unknown’, or filled in with default logic (like ZN or IFNULL) if
+needed.”
+33. What is data granularity?
+“The lowest level of detail in the data—deciding granularity is key to meaningful analysis.”
+34. What are the types of filters in Tableau?
+“Dimension filters, measure filters, relative date filters, context filters, extract filters, and
+data source filters.”
+35. What are quick filters?
+“Interactive, user-facing filters in dashboards—let users adjust what they see.”
+36. What is a legend in Tableau?
+“A guide showing color, size, or shape mappings—helps users interpret visual cues.”
+37. What is the use of Page shelf?
+“To animate or paginate a visualization by a dimension, like showing sales per month as an
+animation.”
+38. What is the Show Me panel?
+“A wizard that recommends suitable chart types based on selected fields.”
+39. How do you refresh data in Tableau?
+“Click the refresh button in Desktop or set up scheduled refreshes in Server/Online.”
+40. What is a Tableau data extract refresh schedule?
+“A schedule that automatically updates extracts on Server or Online to keep dashboards up
+to date.”
+41. What are data roles in Tableau?
+“Field designations like geographic roles (Country, State), or custom roles for grouping data.”
+42. What is the difference between Save and Export?
+“Save saves a workbook; Export lets me extract images, data, or cross-tabs for use
+elsewhere.”
+43. What is a published data source?
+“A reusable, centrally managed data source on Tableau Server—multiple users can connect
+to it for consistent analysis.”
+44. How can you secure data in Tableau?
+“With user filters, row-level security, published extracts with permissions, and by restricting
+access on Server.”
+45. What are user filters?
+“Filters that show different data to each user based on their login.”
+46. How do you optimize data extracts?
+“Limit columns, filter rows, use appropriate data types, and aggregate data when possible.”
+47. What is Tableau Prep and when do you use it?
+“A tool for cleaning, shaping, and combining data before analysis—used when raw data isn’t
+dashboard-ready.”
+48. How does Tableau support big data sources?
+“Through optimized extracts, live connections, query pushdown, and connectors for Hadoop,
+Spark, etc.”
+49. What are limitations when connecting to Excel?
+“Excel isn’t as scalable or real-time as databases; large files can be slow and formula columns
+may not always translate well.”
+50. What are best practices for structuring Tableau projects?
+“Organize data sources, use consistent naming, document calculations, use folders, and plan
+for sharing/publishing.”
+B. Visualization, Design & User Experience
+1. What are the basic chart types in Tableau?
+“Bar, line, scatter, pie, map, tree map, heatmap, Gantt, histogram, highlight tables, and boxand-whisker plots.”
+2. When would you use a bar chart vs. a line chart?
+“Bar charts are for comparing categories; line charts are best for trends over time.”
+3. What is a dual-axis chart?
+“It’s a chart that overlays two axes—great for comparing different measures with different
+scales, like sales and profit.”
+4. How do you build a scatter plot in Tableau?
+“Drag two measures to Columns and Rows shelves—each mark represents a point.”
+5. What are combined axis charts?
+“Charts where two or more measures share the same axis—good for compact comparisons.”
+6. What is a bullet chart and its use?
+“It compares actual performance to a target or benchmark—much better than a basic bar for
+showing goal achievement.”
+7. What is a highlight table?
+“A table where cells are colored based on value, making it easy to spot highs and lows.”
+8. What are heatmaps? When are they used?
+“Color-coded tables or grids, great for visualizing density or intensity across two dimensions.”
+9. What is a tree map?
+“A space-filling visualization of hierarchical data using nested rectangles—size and color show
+measures.”
+10. What is a Gantt chart and where is it useful?
+“It’s a project timeline view—ideal for tracking schedules, durations, and dependencies.”
+11. How do you build a map visualization in Tableau?
+“Assign geographic roles to fields, then drag them to the view—Tableau automatically
+creates the map.”
+12. What is a filled map vs. a symbol map?
+“Filled maps color whole regions (e.g., states), symbol maps use dots or shapes on locations.”
+13. What are small multiples?
+“Repeated charts for different dimension members, useful for comparison.”
+14. What is a histogram?
+“It shows the frequency distribution of a measure—helps analyze data spread and outliers.”
+15. What is a box-and-whisker plot?
+“It visualizes data spread, showing quartiles, medians, and outliers for a dimension.”
+16. What are reference lines and bands?
+“Lines or shaded areas added to highlight targets, averages, or thresholds.”
+17. How do you add trend lines?
+“From the Analytics pane, drag Trend Line into the view—great for regression and
+forecasting.”
+18. How do you show or hide labels?
+“Click the Label shelf or use the “Show Mark Labels” button.”
+19. What are annotations?
+“Notes added to charts to explain outliers or highlight key points.”
+20. What is a tooltip? How can you customize it?
+“A popup that shows details on hover—customizable with fields, formatting, even minicharts (viz-in-tooltip).”
+21. What are dashboard actions?
+“Interactive features—like filtering, highlighting, or navigating—triggered by clicks or
+selections.”
+22. How do you design for mobile devices?
+“Set dashboard size to automatic or specific phone/tablet layouts; preview and adjust
+elements for readability.”
+23. What is responsive design in Tableau dashboards?
+“Dashboards that adapt to screen size—using containers and layout options for flexible
+visuals.”
+24. What is story telling in Tableau?
+“Using stories—sequences of sheets—to guide users through a data-driven narrative.”
+25. How do you use parameters for interactivity?
+“Parameters let users adjust views, calculations, or filters, increasing engagement and
+flexibility.”
+26. What are dynamic titles?
+“Titles that change based on filters, selections, or parameters—using field values inside title
+text.”
+27. What is a filter action vs. a highlight action?
+“Filter actions update other sheets’ data; highlight actions emphasize marks but don’t
+change data shown.”
+28. How do you optimize dashboard performance?
+“Limit quick filters, use extracts, reduce sheets, minimize custom calculations, and aggregate
+data.”
+29. How do you design for accessibility?
+“Use color-blind-friendly palettes, add alt text and tooltips, and ensure keyboard navigation.”
+30. What are best practices for color use?
+“Stick to 5-7 colors, use contrast for emphasis, and avoid relying solely on color for meaning.”
+31. How do you avoid misleading visualizations?
+“Use zero-based axes, avoid 3D, show units, and always label clearly.”
+32. What are sheet swapping and sheet selection techniques?
+“Let users pick which chart to see, by using parameters or filter actions to toggle sheets in a
+dashboard.”
+33. How do you use navigation buttons?
+“Add buttons or images with dashboard actions to guide users between sheets, dashboards,
+or external links.”
+34. How do you show KPIs?
+“Use BANs (Big Ass Numbers), color indicators, and tooltips for quick, clear key metrics.”
+35. What is a BAN (Big Ass Number)?
+“A large, prominent number highlighting a key metric on a dashboard.”
+36. How do you create custom shapes?
+“Import images into the Shapes folder and assign them to marks via the Shape shelf.”
+37. What is a dashboard container?
+“A layout tool for grouping and aligning objects—can be horizontal, vertical, or floating.”
+38. How do you use images in dashboards?
+“Drag Image objects to the dashboard—useful for branding, maps, or instructions.”
+39. How do you show/hide objects dynamically?
+“Use layout containers with show/hide toggles linked to parameters or filter states.”
+40. What is parameter-driven sorting?
+“Let users choose how to sort charts by selecting a parameter—used in calculated fields for
+sorting.”
+41. How do you create custom tooltips?
+“Edit the tooltip field in the Marks card; add formatting, images, or viz-in-tooltip content.”
+42. What are viz-in-tooltip and when would you use them?
+“A mini visualization inside a tooltip—useful for drill-down or more context without
+cluttering the dashboard.”
+43. What’s the purpose of dashboard size settings?
+“To control how a dashboard fits on different screens—fixed, automatic, or custom sizes.”
+44. How do you align charts in a dashboard?
+“Use containers and gridlines for precise layout.”
+45. What is the default sort order in Tableau visualizations?
+“Usually alphabetical for text fields and ascending for numbers, but can be customized.”
+46. What is a worksheet tab?
+“A single visualization—multiple tabs in a workbook for different views.”
+47. How do you export images from Tableau?
+“File > Export As Image, or right-click visualizations.”
+48. How do you publish dashboards to Tableau Server/Public?
+“Click the Share or Publish button; sign in to your server or Tableau Public account.”
+49. What is a performance recording?
+“A diagnostic tool to track query and rendering times—used for dashboard tuning.”
+50. How do you monitor dashboard usage?
+“Tableau Server/Online provides usage stats—views, filters, users, and performance data.”
+C. Calculations, LOD Expressions, and Advanced Analytics
+1. What are calculated fields?
+“Custom fields created using formulas—used for new metrics, logic, or string/date
+operations.”
+2. What’s the difference between row-level and aggregate calculations?
+“Row-level calculations run for every row. Aggregate calculations summarize groups of rows.”
+3. What is an LOD (Level of Detail) expression?
+“An LOD expression lets me control the aggregation level for a calculation, regardless of
+what’s in the view.”
+4. Explain FIXED, INCLUDE, and EXCLUDE in LODs.
+“FIXED sets aggregation at specific fields, INCLUDE adds detail to the default level, EXCLUDE
+removes it from calculation.”
+5. When would you use FIXED LOD?
+“When I need a value aggregated at a set level, no matter what’s in the visualization—like
+customer lifetime value.”
+6. What’s a practical use case for INCLUDE LOD?
+“To calculate values at a more detailed level than the viz—like average sales per transaction
+even if showing by region.”
+7. How do LODs compare to table calculations?
+“LODs work at the data source/query level and are more flexible. Table calculations run after
+data is loaded and only on what’s visible.”
+8. What are table calculations?
+“Calculations performed on the result set in Tableau—like running totals, percent of total,
+and moving averages.”
+9. Name some common table calculations.
+“Running Total, Percent of Total, Rank, Difference, Moving Average, YTD Total.”
+10. What is a running total calculation?
+“A sum that accumulates as you move through the data—shows cumulative values.”
+11. How do you calculate YoY or MoM change?
+“Use LOOKUP() or WINDOW functions to compare current value to a previous period.”
+12. What is a percent of total calculation?
+“A value divided by the total, often as a quick table calculation.”
+13. What is a moving average and when to use it?
+“It smooths trends by averaging a rolling window—useful for spotting long-term patterns.”
+14. How do you use WINDOW_SUM and WINDOW_AVG?
+“They sum or average values in a sliding window—good for advanced smoothing and trend
+analysis.”
+15. How do you use RANK() in Tableau?
+“As a table calculation or in calculated fields to assign rankings based on measures.”
+16. What are calculated sets?
+“Dynamic groups of dimension members, based on a formula or condition.”
+17. How does ISNULL() work in Tableau?
+“Returns TRUE if a value is null—useful for cleaning data or logic in calculations.”
+18. What is the ZN function?
+“Converts nulls to zero—prevents blank or missing results.”
+19. What’s the difference between ZN and IFNULL?
+“ZN only replaces nulls with zero; IFNULL lets me pick any replacement value.”
+20. What is a nested calculation?
+“A calculation inside another calculation—lets me build complex logic step by step.”
+21. How do you use parameters in calculations?
+“Reference them just like fields—users can adjust parameters and calculations update
+instantly.”
+22. How do you do conditional formatting in Tableau?
+“Use calculated fields to assign colors or icons based on logic, then place them on Color or
+Shape shelves.”
+23. What is a Boolean calculation?
+“A calculation returning TRUE or FALSE—used for filtering, color, or logic.”
+24. How do you calculate distinct counts?
+“Use COUNTD() to count unique values.”
+25. What’s the difference between COUNT and COUNTD?
+“COUNT counts all records; COUNTD counts only unique records.”
+26. How do you handle division by zero?
+“Use IF statements or NULLIF to avoid errors—e.g., IF denominator = 0 THEN 0 ELSE
+numerator/denominator END.”
+27. How do you use string functions (LEFT, MID, etc.) in Tableau?
+“In calculated fields—handy for cleaning and parsing text.”
+28. What are date functions in Tableau?
+“Functions like DATEADD, DATEDIFF, DATENAME, and MAKEDATE for manipulating dates.”
+29. How do you create bins?
+“Right-click a field and choose ‘Create Bin’—useful for bucketing continuous measures.”
+30. What is data densification and when does it happen?
+“Tableau fills in missing values or dates so lines and area charts appear continuous.”
+31. What are blended axes?
+“Multiple measures share one axis—simplifies charts and saves space.”
+32. How do you create calculated joins?
+“Create a calculated field in both data sources, then use it as the join key.”
+33. How do you calculate cohort analysis in Tableau?
+“Assign users to groups based on start date, then analyze behavior over time.”
+34. What’s a quick table calculation?
+“A pre-built calculation available from the menu—like running total, percent of total, etc.”
+35. What’s the difference between quick and custom table calculations?
+“Quick are pre-defined and fast to use; custom are fully flexible for complex needs.”
+36. How do you use R and Python scripts in Tableau?
+“Use SCRIPT functions (SCRIPT_REAL, SCRIPT_STR, etc.) for advanced analytics—requires
+R/Python server setup.”
+37. What’s forecasting in Tableau?
+“A built-in statistical model for predicting future values based on trends—simple to set up
+from the Analytics pane.”
+38. What is clustering in Tableau?
+“Automatically groups similar data points using k-means—useful for segmenting customers
+or products.”
+39. What is a trend model?
+“A best-fit line or curve (linear, exponential, etc.) to help visualize and forecast patterns.”
+40. How do you create a reference band based on a calculation?
+“Drag Reference Band from Analytics pane and base it on a calculated field.”
+41. What is a context filter’s effect on calculations?
+“Calculations and dependent filters operate on the context-filtered subset, not the full data
+set.”
+42. What’s the order of operations in Tableau?
+“Extract filters > Data source filters > Context filters > Dimension filters > Measure filters >
+Table calculations > Reference lines > Forecasting.”
+43. What are measure names and measure values?
+“‘Measure Names’ lets me select multiple measures; ‘Measure Values’ stacks them in one
+chart.”
+44. How do you show top N by a calculated field?
+“Create a Set based on Top N using a parameter or calculated field.”
+45. What are limitations of LOD expressions?
+“Can’t always use with blended data, some performance costs, and not all DBs support them
+equally.”
+46. How do you debug calculation errors?
+“Read the error message, break calculations into steps, and test each piece separately.”
+47. What is a level-of-detail shelf?
+“Place to drop dimensions/measures that control aggregation level—used in LOD
+expressions.”
+48. What is attr() function?
+“Returns a value if all records are the same, else * (star)—used to avoid duplicate
+aggregation errors.”
+49. What is a wildcard match?
+“A filter using * or ? to match text patterns.”
+50. How do you troubleshoot calculation performance?
+“Check for complex logic, unnecessary LODs, reduce data volume, and use extracts.”
+D. Tableau Server, Collaboration, and Deployment
+1. What is Tableau Server?
+“A platform for sharing dashboards securely within an organization, enabling collaboration,
+permissions, and scheduled data refresh.”
+2. How is Tableau Server different from Tableau Online?
+“Tableau Server is on-premise or private cloud; Tableau Online is Tableau-hosted in the
+cloud.”
+3. How do you publish a dashboard to Tableau Server?
+“From Desktop, click Publish, select the destination, set permissions, and publish.”
+4. What are user roles and permissions?
+“Roles control what users can do—viewer, explorer, creator; permissions specify access to
+projects, workbooks, or data sources.”
+5. How do you schedule data refreshes?
+“Set up a schedule in Tableau Server/Online for extracts—daily, weekly, etc.”
+6. What is a Tableau project (in Server)?
+“A folder for organizing workbooks, data sources, and permissions on Tableau Server.”
+7. What is versioning in Tableau?
+“Server keeps track of changes; I can revert to earlier versions if needed.”
+8. How do you monitor data extract refreshes?
+“Server’s ‘Tasks’ or ‘Extract Refresh’ pane shows status and alerts for failures.”
+9. How do you manage groups and users?
+“Admins can add users, assign them to groups, and set permissions accordingly.”
+10. How do you secure sensitive data on Tableau Server?
+“By setting permissions, applying row-level security, and limiting data access at the source.”
+11. What are embedded credentials?
+“Credentials saved in a data connection so users don’t have to enter them.”
+12. How do you share dashboards with non-Tableau users?
+“Export as PDF/Image, or publish to Tableau Public if the data isn’t sensitive.”
+13. What is subscription in Tableau?
+“Automated email delivery of dashboards or views on a schedule.”
+14. How do you set up alerting?
+“Use data-driven alerts—set thresholds on measures to trigger emails.”
+15. What is data-driven alerting?
+“Automatic notifications when data hits certain values or conditions.”
+16. How do you track usage statistics?
+“Server’s admin views show who accessed what and when.”
+17. What’s a workbook revision?
+“A saved version—allows rollback if needed.”
+18. How do you roll back to a previous version?
+“Select a previous revision from Server’s history tab.”
+19. How do you troubleshoot a failed dashboard refresh?
+“Check the error logs, validate credentials, test data connections, and verify permissions.”
+20. What is Tableau Bridge?
+“A client to keep on-premise data fresh for Tableau Online.”
+21. What are site roles?
+“Roles at the site level—like site admin, creator, explorer, viewer.”
+22. What is a content owner?
+“The user responsible for a dashboard or data source—they can update and manage
+content.”
+23. What’s a published data source?
+“A data source on Server, reusable by many users and workbooks.”
+24. How do you schedule email reports?
+“Set up subscriptions with frequency and recipients on Tableau Server.”
+25. What are content permissions?
+“Access rules for projects, workbooks, views, and data sources.”
+26. How do you audit data access?
+“Review Server logs and usage reports to see who accessed what data.”
+27. How do you use tags and certifications?
+“Tags categorize content; certifications mark trusted data sources or dashboards.”
+28. How do you promote dashboards from Dev to Prod?
+“Use projects for dev/test/prod, validate, and move content with proper approvals.”
+29. What is a REST API in Tableau?
+“A programming interface for automating tasks like publishing, updating, and managing
+Tableau content.”
+30. How do you automate deployment?
+“Use Tableau’s REST API, command-line tools, or third-party scripts.”
+31. What is server health monitoring?
+“Monitoring hardware/software status, load, failures, and extract refreshes.”
+32. How do you monitor server performance?
+“Use built-in admin dashboards—track CPU, RAM, query times, and extract schedules.”
+33. What are extract vs. live data source tradeoffs on Server?
+“Extracts are faster and more stable, but can be less real-time; live is always current but
+depends on data source reliability.”
+34. What’s the maximum file size on Tableau Public?
+“10 MB per workbook.”
+35. What’s the difference between server and site admin?
+“Server admin manages all sites and global settings; site admin manages content/users
+within a single site.”
+36. How do you secure personal data (GDPR)?
+“Restrict data access, mask or anonymize data, and ensure compliance with organizational
+policies.”
+37. What are the main server logs?
+“VizQL, Backgrounder, Data Engine, and Gateway logs—used for troubleshooting and audits.”
+38. What is SSO (single sign-on)?
+“Authentication allowing users to log in with their company credentials—improves security
+and user experience.”
+39. How do you schedule incremental refreshes?
+“In the extract schedule, select incremental rather than full refresh—faster and lighter.”
+40. How do you deal with user access requests?
+“Process through the admin panel—add users or groups, assign roles and permissions.”
+41. What is a VizQL session?
+“A visualization query session—tracks the rendering and interaction steps for performance
+tuning.”
+42. What is a Tableau site?
+“A separate workspace on Tableau Server for organizing content and users.”
+43. What’s the best way to roll out Tableau to a large team?
+“Train users, set clear permissions, create templates, and offer ongoing support.”
+44. How do you migrate content between servers?
+“Download workbooks/datasources and republish, or use the Tableau Migration Tool.”
+45. How do you recover from a failed deployment?
+“Rollback to previous revisions, restore backups, and communicate clearly with users.”
+46. How do you monitor failed logins?
+“Check Server logs and admin dashboards for authentication errors.”
+47. How do you set up row-level security?
+“Apply user filters or calculated fields that limit data per user or group.”
+48. What is the difference between Tableau Data Management and Prep?
+“Data Management adds governance, catalog, and lineage features; Prep is focused on
+preparing and shaping data.”
+49. How do you script server tasks?
+“Use TabCmd CLI or REST API to automate publishing, refreshing, and other tasks.”
+50. How do you manage API keys?
+“Generate and track them in the Server admin settings; limit their scope and rotate
+regularly.”
+1. How do you ensure data quality in Tableau dashboards?
+I ensure data quality by validating source data before ingestion, using data profiling in Tableau Prep,
+setting up data quality alerts, implementing row-level checks, and comparing key metrics against
+source systems or business logic.
+2. How do you choose the right visualization for your data?
+I first identify the analytical question, then match the data type (categorical, continuous, time series,
+etc.) to the chart type that best reveals patterns—bar for comparisons, line for trends, scatter for
+relationships, and always favor clarity over decoration.
+3. What’s the best way to handle large datasets in Tableau?
+I recommend using extracts instead of live connections, aggregating data upstream, leveraging filters
+to limit data volume, using context filters, optimizing calculated fields, and minimizing the number of
+visualizations per dashboard.
+4. What are some dashboard performance tuning tips?
+Key tips: Limit quick filters, minimize the use of high-cardinality fields, optimize calculations, use
+extracts, limit number of worksheets, reduce data granularity, and avoid unnecessary custom SQL.
+5. How do you handle slow dashboards?
+I profile the dashboard with Tableau’s built-in Performance Recorder, optimize queries, simplify
+visuals, convert calculated fields to precomputed fields, remove unused fields, and consider using
+extracts.
+6. What’s the purpose of extract filters?
+Extract filters reduce data volume at the time of extract creation, improving performance and
+security by only bringing in the required subset of data.
+7. How do you show dynamic text in a dashboard?
+I use calculated fields and parameter actions to drive dynamic titles, captions, and annotations that
+reflect current selections or user filters.
+8. What are top 3 accessibility tips for Tableau dashboards?
+1. Use high-contrast color palettes.
+2. Ensure charts/tables are screen reader-friendly.
+3. Add clear alt text/tooltips for all visuals.
+9. How do you manage multi-user collaboration in Tableau?
+Through project folders, version control (using Tableau Server/Cloud), proper permissions,
+documented standards, and regular team reviews.
+10. What’s the best way to handle sensitive data?
+Restrict access with row-level security, use data masking, avoid showing sensitive fields, leverage
+server permissions, and document all access policies.
+11. How do you validate your calculations?
+I cross-check results with source data, use step-by-step calculated fields, and have peer review or
+business validation before publishing.
+12. What are best practices for color use in dashboards?
+Use brand or purpose-driven palettes, ensure sufficient contrast, use color sparingly for emphasis,
+and always provide a legend.
+13. How do you create custom KPI cards?
+Combine calculated fields, shapes, and dashboard containers; show dynamic numbers, trends, and
+status indicators; use color to reflect KPI status.
+14. What’s the role of design thinking in dashboard development?
+Design thinking puts the user first, iterating designs based on user feedback, simplifying navigation,
+and focusing on real business questions.
+15. How do you ensure end-user adoption?
+I engage users early for feedback, conduct training, create simple UX, provide documentation, and
+iterate quickly on user suggestions.
+16. How do you manage dashboard version control?
+With naming conventions, Tableau Server/Cloud version history, documenting changes in a
+changelog, and archiving deprecated dashboards.
+17. How do you document a Tableau dashboard?
+I use dashboard descriptions, annotations, embedded notes, tooltips, and maintain external
+documentation (wiki or Confluence).
+18. What are some common data preparation pitfalls?
+Ignoring nulls, duplicate records, mismatched data types, inconsistent joins, and not documenting
+data lineage.
+19. How do you monitor dashboard usage?
+Through Tableau Server/Cloud usage reports, audit logs, and by embedding usage-tracking
+parameters.
+20. How do you control user access to certain filters?
+By setting permissions on filter controls, using user filters, and leveraging row-level security policies.
+21. How do you design for mobile in Tableau?
+Use device-specific layouts, test on real devices, keep visuals simple, use larger font sizes, and
+minimize scrolling.
+22. What’s the difference between publishing and exporting?
+Publishing uploads the workbook to Tableau Server/Cloud for interactivity; exporting creates static
+images, PDFs, or data extracts for offline use.
+23. How do you use Tableau Public for your portfolio?
+Publish select (non-sensitive) dashboards to Tableau Public, add narrative/story points, and share
+links on your resume or LinkedIn.
+24. How do you leverage community resources for learning?
+I use Tableau Community forums, blogs, free training videos, and attend Tableau User Groups for tips
+and networking.
+25. What’s the value of certifications?
+Certifications validate expertise, boost credibility with employers/clients, and help structure your
+learning.
+26. How do you handle non-standard date formats?
+I use calculated fields and parsing functions in Tableau Prep or Desktop to convert and standardize
+date fields.
+27. How do you update a dashboard for a new requirement?
+Gather details, assess impact, update data source/calculations/visuals, validate changes, and
+communicate updates to users.
+28. How do you communicate insights to non-technical stakeholders?
+Tell stories with annotated visuals, use clear language, focus on “why” and “what next,” and
+minimize technical jargon.
+29. How do you troubleshoot a blank dashboard?
+Check for missing/empty data, filters excluding all rows, failed connections, and sheet-level visibility
+settings.
+30. What are some key metrics you track on a dashboard?
+Depends on business: volume, trends, KPIs (like sales, churn, conversion), exceptions/outliers, and
+goal vs. actual.
+31. How do you tell a story with Tableau?
+Sequence visuals for context, highlight key takeaways, use storytelling features (e.g., Tableau Story),
+and end with actionable insights.
+32. How do you handle user feedback?
+Document all feedback, prioritize changes, communicate updates, and close the loop with users.
+33. How do you secure embedded dashboards?
+Use SSO authentication, row-level security, trusted tickets, and restrict access via web server
+settings.
+34. What are the risks of over-filtering?
+Over-filtering can confuse users, hide insights, slow performance, and may return empty or
+misleading results.
+35. How do you use Tableau with cloud data sources?
+Connect via built-in connectors (AWS, Google, Azure, Snowflake, etc.), use extracts for speed, and
+ensure secure authentication.
+36. How do you ensure your dashboards scale?
+Design for minimal data movement, aggregate upstream, use extracts, test with large data volumes,
+and modularize dashboards.
+37. What are top mistakes new users make in Tableau?
+Common ones: building overloaded dashboards, ignoring data quality, misusing filters/calcs, and not
+documenting work.
+38. How do you handle time zone differences?
+Standardize on UTC or business time, use calculated fields to adjust, and communicate clearly to end
+users.
+39. How do you perform a dashboard audit?
+Review data sources, calculations, filters, access permissions, visual clarity, and check for deprecated
+logic or fields.
+40. How do you communicate dashboard limitations?
+List them in documentation or dashboard notes; be transparent about assumptions, data gaps, or
+refresh limits.
+41. How do you compare Tableau to Power BI or Qlik?
+Tableau is best for rapid, flexible visualization; Power BI for deep integration with Microsoft stack;
+Qlik for powerful in-memory data modeling. All have strengths—choice depends on org needs.
+42. How do you handle unstructured data?
+Use Tableau Prep or ETL tools to preprocess; bring in as text, then parse, tokenize, or extract features
+as needed.
+43. How do you automate dashboard updates?
+Schedule extract refreshes, automate data prep with Tableau Prep Conductor, and use APIs for endto-end workflows.
+44. How do you avoid misleading data visualization?
+Always show context, use appropriate scales, avoid cherry-picking data, label axes, and never distort
+for aesthetics.
+45. How do you handle row-level security?
+Apply user filters, mapping users to permitted rows via lookup tables, and test with multiple user
+roles.
+46. How do you set up conditional alerts?
+Create calculated fields for thresholds, use Tableau’s built-in alert functionality, and set up
+notifications for users.
+47. How do you manage extracts that fail to refresh?
+Monitor with alerts, review logs for error causes, retry manually, and keep users informed of data
+staleness.
+48. How do you display only top N items dynamically?
+Create a parameter for N, use RANK() in calculated fields, and filter visuals based on rank.
+49. How do you manage dashboard sprawl?
+Regularly audit, consolidate, archive unused dashboards, and create a governance process for
+dashboard requests.
+50. How do you provide user training?
+Host live or recorded walkthroughs, provide quick-start guides, offer open office hours, and
+encourage hands-on practice.
+51. How do you design dashboards for executives vs. analysts?
+Executives: high-level KPIs, clean layout, summary insights.
+Analysts: interactive filters, drill-down, detailed data tables.
+52. What’s the role of UX in Tableau dashboards?
+UX ensures dashboards are intuitive, easy to navigate, and actionable; good UX leads to higher
+adoption.
+53. How do you handle dashboards with confidential KPIs?
+Apply row/cell-level security, restrict sharing, mask values, and require authentication for access.
+54. How do you export Tableau data to Excel?
+Right-click on a sheet or use the export menu, or enable “Download Data” permissions on Tableau
+Server.
+55. How do you troubleshoot calculation errors?
+Check for syntax, test on sample data, break complex calcs into steps, and compare with known
+results.
+56. How do you perform variance analysis?
+Create calculated fields for variance (e.g., actual vs. plan), show as bar or waterfall charts, and
+highlight drivers.
+57. How do you create dynamic hierarchies?
+Use parameters and calculated fields to allow users to choose grouping levels on the fly.
+58. How do you use Tableau Prep for data cleaning?
+Apply steps for deduplication, null handling, field renaming, type conversions, and document the
+prep flow.
+59. What are Tableau Extensions?
+Plug-ins that add extra functionality—e.g., write-back, advanced visualizations, or integration with
+third-party tools.
+60. How do you handle duplicate data?
+Deduplicate using Tableau Prep, filters, or aggregate functions before building dashboards.
+61. What is your process for dashboard QA?
+Checklist:
+• Data validation
+• Calculation checks
+• Filter testing
+• Performance review
+• Peer review
+• User sign-off
+62. How do you track dashboard ROI?
+Measure usage stats, business outcomes, process improvements, and feedback from end-users.
+63. How do you integrate Tableau with R or Python?
+Use Tableau’s SCRIPT functions or Tableau Prep’s integration features to call external R/Python
+scripts for analytics.
+64. How do you use Tableau to monitor business performance?
+By tracking KPIs, trends, targets vs. actuals, and providing alerts/notifications for exceptions.
+65. How do you compare performance year over year?
+Build YoY calculated fields, show with line/bar charts, and highlight deltas in tooltips or KPIs.
+66. What’s the biggest Tableau dashboard you’ve built?
+Example answer:
+I’ve built enterprise dashboards with 10+ interconnected sheets, multiple data sources, and 100k+
+rows, optimized for executive and analyst views.
+67. How do you design dashboards for rapid insight?
+Prioritize most important KPIs, minimize distractions, use color sparingly, and provide clear drilldown paths.
+68. How do you handle licensing and access?
+Coordinate with IT, assign licenses based on roles (viewer/editor/creator), and review access
+quarterly.
+69. How do you back up your Tableau projects?
+Export workbook files, use versioning, and ensure scheduled backups of Tableau Server/Cloud.
+70. How do you recover from a corrupted workbook?
+Restore from backup, try opening in older Tableau version, or contact Tableau Support.
+71. How do you deal with Tableau upgrades?
+Test in sandbox environments, review release notes, and train users on new features.
+72. How do you communicate dashboard changes to stakeholders?
+Send release notes, update documentation, hold review meetings, and solicit feedback on changes.
+73. How do you perform root-cause analysis in Tableau?
+Drill into granular data, use filters to isolate anomalies, and build “why” analysis with calculated
+fields.
+74. How do you create a dashboard template?
+Standardize branding, layout, navigation, and include instructions/placeholder sheets for reuse.
+75. How do you create a dynamic legend?
+Use calculated fields and parameter-driven labels to update legends as user selections change.
+76. How do you manage stakeholder expectations?
+Set clear timelines, explain data/source limitations, and communicate early about scope changes.
+77. How do you handle dashboards with too much data?
+Aggregate upstream, split into multiple dashboards, and use filters or parameters for focused
+analysis.
+78. How do you use Tableau to automate reporting?
+Schedule data refreshes, use subscriptions for report emails, and leverage Tableau Prep for
+repeatable ETL.
+79. How do you manage deprecated data sources?
+Audit dashboards regularly, flag deprecated sources, and update affected dashboards before
+decommissioning.
+80. How do you ensure dashboards are actionable?
+Align KPIs to business goals, provide clear next steps, and design with user decision-making in mind.
+81. How do you build a Tableau Center of Excellence?
+Establish standards, provide training, share best practices, and mentor a network of Tableau
+champions.
+82. How do you manage Tableau training for a large org?
+Develop structured learning paths, offer both live and self-paced training, and maintain resources on
+a central platform.
+83. How do you design for future scalability?
+Plan for modular data sources, reusable templates, performance optimization, and flexible user
+roles.
+84. How do you perform impact analysis?
+Assess which dashboards or reports use a field/source before making changes, using Tableau’s
+lineage tools.
+85. How do you manage Tableau user licenses?
+Track license usage, align to business needs, reassign as roles change, and regularly review.
+86. How do you plan a dashboard migration?
+Inventory current assets, map dependencies, communicate timelines, migrate in stages, and validate
+post-migration.
+87. How do you measure dashboard adoption?
+Monitor usage stats, collect user feedback, and measure against business goals.
+88. How do you ensure compliance with data governance?
+Document data sources, use data stewards, restrict access, and audit usage regularly.
+89. How do you create multi-lingual dashboards?
+Use parameter-driven field labels and calculated fields to switch language, or duplicate dashboards
+per language.
+90. How do you use Tableau APIs?
+Automate publishing, user management, and extract refreshes with REST and JavaScript APIs.
+91. How do you do A/B testing for dashboards?
+Release two versions, assign user groups, collect usage/feedback, and select the best based on
+results.
+92. How do you track Tableau server usage trends?
+Analyze server logs, use built-in admin dashboards, and set up alerting for unusual patterns.
+93. How do you optimize dashboards for cloud?
+Use extracts, minimize visuals per dashboard, design for network latency, and leverage cloud
+connectors.
+94. How do you manage deprecated workbooks?
+Archive or delete unused workbooks, maintain an inventory, and set retention policies.
+95. How do you deal with Tableau bugs?
+Search for known issues, apply patches, use workarounds, and escalate to Tableau Support if
+needed.
+96. How do you keep up with Tableau updates?
+Read release notes, follow Tableau blogs/community, and attend webinars or user groups.
+97. How do you handle conflicting stakeholder requests?
+Facilitate workshops, prioritize by business impact, and document decisions transparently.
+98. How do you document Tableau Server deployments?
+Maintain architecture diagrams, change logs, server specs, and deployment scripts in a central
+repository.
+99. How do you ensure Tableau dashboards meet audit/compliance?
+Enforce access controls, document data lineage, and regularly audit dashboard usage and
+permissions.
+100. What are the future trends in data visualization and Tableau?
+More AI-driven insights, natural language querying, embedded analytics, and deeper integration
+with cloud and RPA tools.
